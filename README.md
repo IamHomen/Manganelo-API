@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/riimuru/gogoanime">
-    <img src="https://scontent.fmnl8-1.fna.fbcdn.net/v/t39.30808-1/399896140_253568701044331_4401876828126274474_n.jpg?stp=dst-jpg_s200x200&_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEGHFyU6N4lg-L3pOzW4MHJcDsW_--22O1wOxb_77bY7c6vGSfoIR2WZV-FlMXxv7zOgBrLOFPgpMGU0c4q4tjG&_nc_ohc=1b74miPkHPwAX-c7PhG&_nc_ht=scontent.fmnl8-1.fna&oh=00_AfDejHwLB3ITpuoXAojHETmoBrnuikLvferrJPEM4wnMyA&oe=65510F27" alt="Logo" width="85" height="85">
+    <img src="https://m.manganelo.com/themes/hm/images/logo.png" alt="Logo" width="85" height="85">
   </a>
 
   <h3 align="center">Manganelo API</h3>
@@ -40,7 +40,7 @@ Run the following command to clone the repository, and install the dependencies:
 
 ```sh
 git clone https://github.com/mrcainv1-3128/Manganelo-API.git
-cd gogoanime
+cd Manganelo-API
 npm install #or yarn install
 ```
 
@@ -51,15 +51,6 @@ npm start #or yarn start
 ```
 Now the server is running on http://localhost:3000
 
-### Docker
-Docker image is available at [Docker Hub](https://hub.docker.com/r/riimuru/gogoanime).
-
-run the following command to pull and run the docker image.
-
-```sh
-docker pull riimuru/gogoanime
-docker run -p 3000:3000 riimuru/gogoanime
-```
 This will start the server on port 3000. You can access the server at http://localhost:3000/, And can change the port by changing the -p option to `-p <port>:3000`.
 
 You can add `-d` flag to run the server in detached mode.
@@ -82,17 +73,16 @@ Host your own instance of the api on railway using the button below.
 ## Routes
 Below you'll find examples using [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) but you can use any other http library out there.
 
-### Get Recent Episodes
+### Get Latest Updates
 
 | Parameter    | Description                                                                                                                                                                                   |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` (int) | (optional) by default the type is 1. **type 1: japanese with subtitle. type 2: english dub with no subtitles. type 3: chinese with english subtitles.** Example: `GET /recent-release?type=2` |
-| `page` (int) | **type 1 page limit: [1-331]. type 2: [1-139]. type 3: [1-22].**                                                                                                                              |
+| `page` (int) | **page limit: [1-1643].**                                                                                                                              |
 
 ```js
-fetch("https://gogoanime.consumet.stream/recent-release")
+fetch("http://localhost:3000/latest-manga?page=1")
   .then((response) => response.json())
-  .then((animelist) => console.log(animelist));
+  .then((mangalist) => console.log(mangalist));
 ```
 
 Output >>
@@ -100,28 +90,28 @@ Output >>
 ```json
 [
     {
-        "episodeId": "deep-insanity-the-lost-child-episode-9",
-        "animeTitle": "Deep Insanity: The Lost Child",
-        "episodeNum": "9",
-        "subOrDub": "SUB",
-        "animeImg": "https://cdnimg.xyz/cover/deep-insanity-the-lost-child.png",
-        "episodeUrl": "https://www1.gogoanime.cm//deep-insanity-the-lost-child-episode-9"
-    },
+    "mangaId": "https://chapmanganelo.com/manga-uv135189",
+    "mangaTitle": "Souiu Koto Nara, Watashi Ga.",
+    "chapterNum": "Vol.1 Chapter 5",
+    "views": "276",
+    "mangaImg": "https://avt.mkklcdnv6temp.com/28/f/31-1694400532.jpg",
+    "description": "\nI love you so much so just why do I have to wait until I turn 30!?Nagase Kana (28) is the daughter of a company president and she now works as an OL at the company. Kana is actually secretly dating her boss, Haruhiko (40) and her current source of worry is the fact that he still hasn't made a move on her.Meanwhile, Shindou Haruhiko decided on his own that, \"I won't lay a hand on you until \n"
+  },
     {...},
     ...
 ]
 ```
 
-### Get Popular Anime
+### Get Top Manga
 
 | Parameter    | Description         |
 | ------------ | ------------------- |
-| `page` (int) | page limit: [1-504] |
+| `page` (int) | page limit: [1-1643] |
 
 ```js
-fetch("https://gogoanime.consumet.stream/popular")
+fetch("http://localhost:3000/top-manga?page=1")
   .then((response) => response.json())
-  .then((animelist) => console.log(animelist));
+  .then((mangalist) => console.log(mangalist));
 ```
 
 Output >>
@@ -129,18 +119,19 @@ Output >>
 ```json
 [
     {
-        "animeId": "boruto-naruto-next-generations",
-        "animeTitle": "Boruto: Naruto Next Generations",
-        "animeImg": "https://gogocdn.net/cover/boruto-naruto-next-generations.png",
-        "releasedDate": "2017",
-        "animeUrl": "https://www1.gogoanime.cm//category/boruto-naruto-next-generations"
-    },
+    "mangaId": "https://chapmanganelo.com/manga-ax89091/chapter-452.5",
+    "mangaTitle": "Tales Of Demons And Gods",
+    "chapterNum": "Chapter 452.5",
+    "views": "829.3K",
+    "mangaImg": "https://avt.mkklcdnv6temp.com/19/v/1-1583464475.jpg",
+    "description": "\nNie Li, one of the strongest Demon Spiritist in his past life standing at the pinnacle of the martial world , however he lost his life during the battle with Sage Emperor and the six deity ranked beast, his soul was then reborn back in time back to when he is still 13. Although he’s the weakest in his class with the lowest talent at only Red soul realm, with the aid of the vast knowledge whi \n"
+  },
     {...},
     ...
 ]
 ```
 
-### Get Anime Search
+### Get Manga Search
 
 | Parameter       | Description         |
 | --------------- | ------------------- |
