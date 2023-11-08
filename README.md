@@ -21,7 +21,7 @@
   - [Render](#render)
   - [Railway](#railway)
 - [Routes](#routes)
-  - [Get Latest Update](#get-latest-Update)
+  - [Get Latest Update](#get-latest-update)
   - [Get Top Manga](#get-top-manga)
   - [Get New Manga](#get-new-manga)
   - [Get Anime Movies](#get-anime-movies)
