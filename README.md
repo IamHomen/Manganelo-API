@@ -73,7 +73,7 @@ Host your own instance of the api on railway using the button below.
 ## Routes
 Below you'll find examples using [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) but you can use any other http library out there.
 
-### Get Latest Updates
+### Get Latest Update
 
 | Parameter    | Description                                                                                                                                                                                   |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
