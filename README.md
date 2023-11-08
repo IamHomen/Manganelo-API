@@ -3,64 +3,32 @@
     <img src="https://scontent.fmnl8-1.fna.fbcdn.net/v/t39.30808-1/399896140_253568701044331_4401876828126274474_n.jpg?stp=dst-jpg_s200x200&_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEGHFyU6N4lg-L3pOzW4MHJcDsW_--22O1wOxb_77bY7c6vGSfoIR2WZV-FlMXxv7zOgBrLOFPgpMGU0c4q4tjG&_nc_ohc=1b74miPkHPwAX-c7PhG&_nc_ht=scontent.fmnl8-1.fna&oh=00_AfDejHwLB3ITpuoXAojHETmoBrnuikLvferrJPEM4wnMyA&oe=65510F27" alt="Logo" width="85" height="85">
   </a>
 
-  <h3 align="center">GogoAnime API</h3>
+  <h3 align="center">Manganelo API</h3>
 
   <p align="center">
-    <samp>A free anime streaming restful API serving anime from <a href="https://www1.gogoanime.cm/">Gogoanime</a></samp>
+    <samp>A free manga reading restful API serving manga from <a href="https://m.manganelo.com/">Manganelo</a></samp>
     <br />
     <a href="#routes"><strong>Explore the api »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/riimuru/gogoanime/issues/new?assignees=riimuru&labels=bug&template=bug-report.yml">Bug report</a>
-    ·
-    <a href="https://github.com/riimuru/gogoanime/issues/new?assignees=riimuru&labels=enhancement&template=feature-request.md">Feature request</a>
   </p>
-  <p align="center">
-    <a href="https://github.com/riimuru/gogoanime/actions/workflows/docker-build.yml">
-      <img src="https://github.com/riimuru/gogoanime/actions/workflows/docker-build.yml/badge.svg" alt="stars">
-    </a>
-     <a href="https://github.com/riimuru/gogoanime/actions/workflows/codeql-analysis.yml">
-      <img src="https://github.com/riimuru/gogoanime/actions/workflows/codeql-analysis.yml/badge.svg" alt="stars">
-    </a>
-    <a href="https://github.com/riimuru/gogoanime">
-      <img src="https://img.shields.io/github/stars/riimuru/gogoanime" alt="stars">
-    </a>
-    <a href="https://discord.gg/qTPfvMxzNH">
-      <img src="https://img.shields.io/discord/987492554486452315?color=7289da&label=discord&logo=discord&logoColor=7289da" alt="Discord">
-    </a>
-        <a href="https://github.com/consumet/extensions/blob/master/LICENSE">
-      <img src="https://img.shields.io/github/license/consumet/extensions" alt="GitHub">
-    </a>
-  </p>
-</p>
 
 <h1> Table of Contents </h1>
 
 - [Installation](#installation)
   - [Local](#local)
-  - [Docker](#docker)
   - [Heroku](#heroku)
   - [Render](#render)
   - [Railway](#railway)
 - [Routes](#routes)
-  - [Get Recent Episodes](#get-recent-episodes)
-  - [Get Popular Anime](#get-popular-anime)
-  - [Get Anime Search](#get-anime-search)
+  - [Get Latest Update](#get-latest-Update)
+  - [Get Top Manga](#get-top-manga)
+  - [Get New Manga](#get-new-manga)
   - [Get Anime Movies](#get-anime-movies)
   - [Get Top Airing](#get-top-airing)
   - [Get Anime Genres](#get-anime-genres)
     - [Genres](#genres)
   - [Get Anime Details](#get-anime-details)
-  - [Get Streaming URLs](#get-streaming-urls)
-    - [VIDCDN](#vidcdn)
-    - [StreamSB](#streamsb)
-    - [~~Fembed~~ (DEPRECATED)](#fembed-deprecated)
-  - [~~Get Download URLs~~ (DEPRECATED)](#get-download-urls-deprecated)
-    - [Download](#download)
-  - [Get Episode Thread](#get-episode-thread)
-- [Contributing](#contributing)
-- [Showcases](#showcases)
-- [NEW API (v2) 🎉](#new-api-v2-)
   - [Currently supported sites](#currently-supported-sites)
   - [How to get started?](#how-to-get-started)
 
@@ -71,7 +39,7 @@
 Run the following command to clone the repository, and install the dependencies:
 
 ```sh
-git clone https://github.com/riimuru/gogoanime.git
+git clone https://github.com/mrcainv1-3128/Manganelo-API.git
 cd gogoanime
 npm install #or yarn install
 ```
