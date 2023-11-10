@@ -139,9 +139,9 @@ Output >>
 | `page` (int)    | page limit may vary |
 
 ```js
-fetch("https://gogoanime.consumet.stream/search?keyw=naruto")
+fetch("http://localhost:3000/search?keyw=isekai&page=1")
   .then((response) => response.json())
-  .then((animelist) => console.log(animelist));
+  .then((mangalist) => console.log(mangalist));
 ```
 
 Output >>
@@ -149,56 +149,28 @@ Output >>
 ```json
 [
     {
-        "animeId": "naruto",
-        "animeTitle": "Naruto",
-        "animeUrl": "https://www1.gogoanime.cm//category/naruto",
-        "animeImg": "https://gogocdn.net/images/anime/N/naruto.jpg",
-        "status": "Released: 2002"
-    },
+    "mangaId": "https://chapmanganelo.com/manga-qm88732",
+    "mangaTitle": "Mushoku Tensei - Isekai Ittara Honki Dasu",
+    "author": "Rifujin Na Magonote, Fujikawa Yuka",
+    "views": "334.5K",
+    "mangaImg": "https://avt.mkklcdnv6temp.com/7/r/1-1583463967.jpg",
+    "last_update": "Oct 13,2023 - 22:21"
+  },
     {...},
     ...
 ]
 ```
 
-### Get Anime Movies
-
-| Parameter      | Description                                                                                                                    |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `aph` (string) | (optional) by default the movie list is random. **values are from [A-Z]. And 0 is Ascending order with page limit of [1-89].** |
-| `page` (int)   | page limit may vary                                                                                                            |
-
-```js
-fetch("https://gogoanime.consumet.stream/anime-movies")
-  .then((response) => response.json())
-  .then((animelist) => console.log(animelist));
-```
-
-Output >>
-
-```json
-[
-	{
-		"animeId": "tenchi-muyou-manatsu-no-eve",
-		"animeTitle": "Tenchi Muyou! Manatsu no Eve",
-		"animeImg": "https://gogocdn.net/cover/tenchi-muyou-manatsu-no-eve.png",
-		"releasedDate": "1997",
-		"animeUrl": "https://www1.gogoanime.cm//category/tenchi-muyou-manatsu-no-eve"
-	},
-    {...},
-    ...
-]
-```
-
-### Get Top Airing
+### Get Top Completed Manga
 
 | Parameter    | Description                                                                                                 |
 | ------------ | ----------------------------------------------------------------------------------------------------------- |
-| `page` (int) | page limit [1-26]. ***-1** to fetch all the pages avaliable **Warning: Waiting time will be much longer.*** |
+| `page` (int) | page limit [1-393].                                                                                         |
 
 ```js
-fetch("https://gogoanime.consumet.stream/top-airing")
+fetch("http://localhost:3000/top-completed-manga?page=1")
   .then((response) => response.json())
-  .then((animelist) => console.log(animelist));
+  .then((mangalist) => console.log(mangalist));
 ```
 
 Output >>
@@ -206,13 +178,13 @@ Output >>
 ```json
 [
 	{
-		"animeId": "sekai-saikou-no-ansatsusha-isekai-kizoku-ni-tensei-suru",
-		"animeTitle": "Sekai Saikou no Ansatsusha, Isekai Kizoku ni Tensei suru",
-		"animeImg": "https://cdnimg.xyz/cover/sekai-saikou-no-ansatsusha-isekai-kizoku-ni-tensei-suru.png",
-		"latestEp": "Episode 9",
-		"animeUrl": "https://www1.gogoanime.cm//category/sekai-saikou-no-ansatsusha-isekai-kizoku-ni-tensei-suru",
-		"genres": ["Action", "Drama", "Fantasy", "Mystery", "Romance"]
-	}
+    "mangaId": "https://chapmanganelo.com/manga-yg89074/chapter-953.6",
+    "mangaTitle": "Tomo-Chan Wa Onnanoko!",
+    "chapterNum": "Chapter 953.6: Volume 8 Extras",
+    "views": "269.6K",
+    "mangaImg": "https://avt.mkklcdnv6temp.com/19/e/1-1583464448.jpg",
+    "description": "\nTomo loves Jun, but she is really boyish (speaks like a boy, is the strongest karateka of her school...) and can't get him to think of her as a girl. Read the funny lives of Tomo, her best friend Misuzu and Jun! \n"
+  },
     {...},
     ...
 ]
@@ -303,11 +275,11 @@ Output >>
     ...
 ```
 
-### Get Anime Details
+### Get Manga Details
 
 | Parameter      | Description                                                                          |
 | -------------- | ------------------------------------------------------------------------------------ |
-| `:id` (string) | **animeId can be found in every response body as can be seen in the above examples** |
+| `:id` (string) | **mangaId can be found in every response body as can be seen in the above examples** |
 
 ```js
 fetch("https://gogoanime.consumet.stream/anime-details/naruto")
