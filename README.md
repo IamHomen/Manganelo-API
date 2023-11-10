@@ -24,7 +24,7 @@
   - [Get Latest Update](#get-latest-update)
   - [Get Top Manga](#get-top-manga)
   - [Get New Manga](#get-new-manga)
-  - [Get Anime Movies](#get-anime-movies)
+  - [Get Anime Movies](#get-manga-search)
   - [Get Top Airing](#get-top-airing)
   - [Get Anime Genres](#get-anime-genres)
     - [Genres](#genres)
