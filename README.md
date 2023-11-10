@@ -194,7 +194,7 @@ Output >>
 
 | Parameter    | Description                                                                                                 |
 | ------------ | ----------------------------------------------------------------------------------------------------------- |
-| `page` (int) | page limit [1-1644].                                                                                         |
+| `page` (int) | page limit [1-1644].                                                                                        |
 
 ```js
 fetch("http://localhost:3000/new-manga?page=1")
