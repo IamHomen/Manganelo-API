@@ -177,7 +177,7 @@ Output >>
 
 ```json
 [
-	{
+  {
     "mangaId": "https://chapmanganelo.com/manga-yg89074/chapter-953.6",
     "mangaTitle": "Tomo-Chan Wa Onnanoko!",
     "chapterNum": "Chapter 953.6: Volume 8 Extras",
@@ -190,89 +190,33 @@ Output >>
 ]
 ```
 
-### Get Anime Genres
+### Get New Manga
 
-| Parameter         | Description                           |
-| ----------------- | ------------------------------------- |
-| `:genre` (string) | [Genres are avaliable below](#genres) |
-| `page` (int)      | The page limit varies by genre.       |
-
-#### Genres
-<details>
-<summary>Genres list</summary>
-
-| Genre           |
-| --------------- |
-| `action`        |
-| `adventure`     |
-| `cars `         |
-| `comedy`        |
-| `crime`         |
-| `dementia`      |
-| `demons`        |
-| `drama`         |
-| `dub`           |
-| `ecchi`         |
-| `family`        |
-| `fantasy`       |
-| `game`          |
-| `gourmet`       |
-| `harem`         |
-| `historical`    |
-| `horror`        |
-| `josei`         |
-| `kids`          |
-| `magic`         |
-| `martial-arts`  |
-| `mecha`         |
-| `military`      |
-| `Mmusic`        |
-| `mystery`       |
-| `parody`        |
-| `police`        |
-| `psychological` |
-| `romance`       |
-| `samurai`       |
-| `school`        |
-| `sci-fi`        |
-| `seinen`        |
-| `shoujo`        |
-| `shoujo-ai`     |
-| `shounen`       |
-| `shounen-ai`    |
-| `slice-of-Life` |
-| `space`         |
-| `sports`        |
-| `super-power`   |
-| `supernatural`  |
-| `suspense`      |
-| `thriller`      |
-| `vampire`       |
-| `yaoi`          |
-| `yuri`          |
-
-</details>
-&nbsp;
+| Parameter    | Description                                                                                                 |
+| ------------ | ----------------------------------------------------------------------------------------------------------- |
+| `page` (int) | page limit [1-1644].                                                                                         |
 
 ```js
-fetch("https://gogoanime.consumet.stream/genre/action")
+fetch("http://localhost:3000/new-manga?page=1")
   .then((response) => response.json())
-  .then((animelist) => console.log(animelist));
+  .then((mangalist) => console.log(mangalist));
 ```
 
 Output >>
 
 ```json
 [
-    {
-        "animeId": "isekai-meikyuu-de-harem-wo",
-        "animeTitle": "Isekai Meikyuu de Harem wo",
-        "animeImg": "https://gogocdn.net/cover/isekai-meikyuu-de-harem-wo.png",
-        "releasedDate": "2022",
-        "animeUrl": "https://www1.gogoanime.cm//category/isekai-meikyuu-de-harem-wo"
-    },
+  {
+    "mangaId": "https://chapmanganelo.com/manga-vr136437",
+    "mangaTitle": "Kaoru On An Emotional Rollercoaster",
+    "chapterNum": "",
+    "views": "0",
+    "mangaImg": "https://avt.mkklcdnv6temp.com/28/f/32-1699608345.jpg",
+    "description": "\nnot found... \n"
+  },
     {...},
     ...
+]
 ```
 
 ### Get Manga Details
