@@ -25,7 +25,7 @@
   - [Get Top Manga](#get-top-manga)
   - [Get New Manga](#get-new-manga)
   - [Get Manga Search](#get-manga-search)
-  - [Get Top Airing](#get-top-airing)
+  - [Get Top Completed Manga](#get-top-completed-manga)
   - [Get Anime Genres](#get-anime-genres)
     - [Genres](#genres)
   - [Get Anime Details](#get-anime-details)
