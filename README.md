@@ -24,7 +24,7 @@
   - [Get Latest Update](#get-latest-update)
   - [Get Top Manga](#get-top-manga)
   - [Get New Manga](#get-new-manga)
-  - [Get Anime Movies](#get-manga-search)
+  - [Get Manga Search](#get-manga-search)
   - [Get Top Airing](#get-top-airing)
   - [Get Anime Genres](#get-anime-genres)
     - [Genres](#genres)
@@ -492,10 +492,10 @@ Output >>
 The `id`, `parent` and `depth` keys on the comments list can be used to determine the comment structure in your app.
 
 ## Contributing
-1. [Fork the repository](https://github.com/riimuru/gogoanime)
+1. [Fork the repository](https://github.com/mrcainv1-3128/Manganelo-API)
 2. Clone your fork to your local machine using the following command **(make sure to change `<your_username>` to your GitHub username)**:
 ```sh
-git clone https://github.com/<your-username>/gogoanime.git
+git clone https://github.com/<your-username>/Manganelo-API.git
 ```
 3. Create a new branch: `git checkout -b <new-branch-name>` (e.g. `git checkout -b my-new-branch`)
 4. Make your changes.
@@ -506,85 +506,17 @@ git clone https://github.com/<your-username>/gogoanime.git
 
 ## Showcases
 Projects using this api or smaller parts of it:
-- [Animeflix](https://github.com/chirag-droid/animeflix) - A streaming service made with NextJs and TailwindCSS. It lets you search, watch animes without any ads with a beautiful ui. It can be self hosted or deployed online.
-
-- [miru](https://github.com/Dank-del/miru) - A cross platform anime streaming app made using flutter.
-
-- [AnimeEZ](https://github.com/dhvitOP/AnimeEZ) - A Website Made using html and express as its server for streaming anime without any ads.
-
-- [Gogoanime Clone](https://github.com/shashankktiwariii/gogoanime-clone) - PHP clone of GogoAnime Website (No Video Ads) | Anime Website
-
 - [Anikatsu](https://github.com/shashankktiwariii/anikatsu) - Free Anime Streaming Website Made with PHP and Gogoanime API. No Video ads (zoro.to clone)
 > For other projects that are using this api or smaller parts of it, please reach out to me at my [discord rem#1723](https://discord.gg/775082234507427890) or join the [discord server](https://discord.gg/sP2k8vhjdb) or make a pull request to add it to the list.
 
-## NEW API (v2) 🎉
-I have made a new [api](https://github.com/consumet/consumet-api) and a [nodejs library](https://github.com/consumet/consumet.ts) (called consumet) for developers to use in their projects. This new api/library is able to support any piracy site that is for anime, manga, books, light novels, movie/tvshows, comics, and even personal meta providers like mapping anilist -> gogoanime -> kitsu, or tmbd -> movie-database.
-
 ### Currently supported sites
-<details>
-<summary>Anime</summary>
-
-- [9Anime](https://9anime.to/)
-- [AniMixPlay](https://animixplay.to)
-- [AnimeFox](https://animefox.tv)
-- [AnimePahe](https://animepahe.com/)
-- [Enime](https://enime.moe)
-- [Gogoanime](https://gogoanime.lu/)
-- [Zoro.to](https://zoro.to/)
-
-</details>
 <details>
 <summary>Manga</summary>
 
-- [MangaDex](https://mangadex.org/)
-- [MangaHere](https://mangahere.cc/)
-- [MangaKakalot](https://mangakakalot.com/)
-</details>
-
-<details>
-<summary>Books</summary>
-
-- [Libgen](https://libgen.rs)
-</details>
-
-<details>
-<summary>Light Novels</summary>
-
-- [Read Light Novels](https://readlightnovels.net/)
-</details>
-
-<details>
-<summary>Movie/TV Shows</summary>
-
-- [FlixHQ](https://flixhq.to/)
-</details>
-
-<details>
-<summary>Comics</summary>
-
-- [GetComics](https://getcomics.info/)
-</details>
-
-<details>
-<summary>Personal Meta Providers</summary>
-
-- [Anilist](https://anilist.co/) - Mapping anilist -> (piracy anime source) -> kitsu (for episode images, and description)
-</details>
-
-### How to get started?
-- [Rest API Documentation](https://docs.consumet.org/), [Rest API Repository](https://github.com/consumet/consumet-api#table-of-contents)
-- [NodeJS Package Documentation](https://github.com/consumet/consumet.ts#readme): where most of the development is happening.
-
-Join the [discord server](https://discord.gg/sP2k8vhjdb) for support and help.
-
-<a href="https://discord.gg/qTPfvMxzNH">
-   <img src="https://discordapp.com/api/guilds/987492554486452315/widget.png?style=banner2">
-</a>
-<br />
-<br />
+- [Manganelo](https://m.manganelo.com/)
 
 
 > ### Note:
-> **Your feedback and suggestions are very welcome. Please [open an issue](https://github.com/consumet/consumet-api/issues/new/choose) or join the [discord server](https://discord.gg/qTPfvMxzNH).**
+> **Your feedback and suggestions are very welcome. Please [open an issue](https://github.com/mrcainv1-3128/Manganelo-API/issues/new) or join the [discord server](https://discord.gg/qTPfvMxzNH).**
 > This project will still be maintained.
 
