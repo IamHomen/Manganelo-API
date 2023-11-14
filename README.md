@@ -3,7 +3,7 @@
     <img src="https://m.manganelo.com/themes/hm/images/logo.png" alt="Logo" width="85" height="85">
   </a>
 
-  <h3 align="center">Manganelo API</h3>
+  <h3 align="center">Manganelo API (Ongoing)</h3>
 
   <p align="center">
     <samp>A free manga reading restful API serving manga from <a href="https://m.manganelo.com/">Manganelo</a></samp>
