@@ -235,21 +235,46 @@ Output >>
 
 ```json
 {
-    "animeTitle": "Naruto",
-    "type": "TV Series",
-    "releasedDate": "2002",
-    "status": "Completed",
-    "genres": ["Action", "Comedy", "Martial Arts", "Shounen", "Super Power"],
-    "otherNames": "ナルト",
-    "synopsis": "...",
-    "animeImg": "https://gogocdn.net/images/anime/N/naruto.jpg",
-    "episodesAvaliable": "220",
-    "episodesList": [
-        {
-            "episodeId": "naruto-episode-220",
-            "episodeNum": "220",
-            "episodeUrl": "https://www1.gogoanime.cm//naruto-episode-220"
-        },
+  "mangaTitle": "Sokushi To Hametsu No Saijaku Majutsushi",
+  "mangaImg": "https://avt.mkklcdnv6temp.com/13/n/32-1698117049.jpg",
+  "authors": [
+    {
+      "authorName": "Agyou Ren"
+    }
+  ],
+  "updatedOn": "Nov 13,2023 - 03:42 AM",
+  "status": "Ongoing",
+  "genres": [
+    {
+      "genreId": "https://m.manganelo.com/genre-2",
+      "genreTitle": "Action"
+    },
+    {
+      "genreId": "https://m.manganelo.com/genre-4",
+      "genreTitle": "Adventure"
+    },
+    {
+      "genreId": "https://m.manganelo.com/genre-12",
+      "genreTitle": "Fantasy"
+    },
+    {
+      "genreId": "https://m.manganelo.com/genre-14",
+      "genreTitle": "Harem"
+    },
+    {
+      "genreId": "https://m.manganelo.com/genre-33",
+      "genreTitle": "Shounen"
+    }
+  ],
+  "alternativeTitle": "Instant Death and Destruction of the Weakest Magician ; 即死と破滅の最弱魔術師",
+  "synopsis": "Arc and Lean are aspiring adventurers. Upon appraisal, Lean is revealed to be on the level of a hero, with the level cap of 30 and the skills and ! However, Arc has an instant death magic with a level cap of... 1?!With his instant death magic, he'll becomes embroiled in a national crisis that shakes the world!",
+  "chapterList": [
+    {
+      "chapterId": "https://chapmanganelo.com/manga-vb136069/chapter-4",
+      "chapterTitle": "Chapter 4: Chapter 4",
+      "chapterViews": "33",
+      "chapterUploadTime": "Nov 13,23"
+    },
         {...},
         ...
     ]
