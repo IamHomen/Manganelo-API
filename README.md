@@ -28,7 +28,7 @@
   - [Get Top Completed Manga](#get-top-completed-manga)
   - [Get Anime Genres](#get-anime-genres)
     - [Genres](#genres)
-  - [Get Anime Details](#get-anime-details)
+  - [Get Manga Details](#get-manga-details)
   - [Currently supported sites](#currently-supported-sites)
   - [How to get started?](#how-to-get-started)
 
