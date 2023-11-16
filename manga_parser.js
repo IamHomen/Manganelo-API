@@ -198,3 +198,20 @@ export const scrapeMangaDetails = async ({ id }) => {
      return { error: err };
     }
    };
+
+   export const scrapeGenreManga = async ({ list = [], page = 1 }) => {
+    try {
+            const mainPage = await axios.get(`${recent_release_url}`);
+            const $ = cheerio.load(mainPage.data);
+
+            $('div.panel-genres-list > a').each((i, el) => {
+                list.push({
+                    genreId: $(el).attr('href'),
+                    genreTitle: $(el).text(),
+                });
+            });
+        return list;
+    } catch (err) {
+        throw err;
+    }
+};

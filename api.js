@@ -6,7 +6,8 @@ import { scrapeLatestManga,
          scrapeNewManga,
          scrapeSearch,
          scrapeTopCompletedManga,
-         scrapeMangaDetails
+         scrapeMangaDetails,
+         scrapeGenreManga
  } from './manga_parser.js';
 
 const port = process.env.PORT || 3000;
@@ -87,6 +88,20 @@ app.get('/top-completed-manga', async (req, res) => {
   try {
     const page = req.query.page;
     const data = await scrapeTopCompletedManga({ page: page });
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({
+      status: 500,
+      error: 'Internal Error',
+      message: err.message, // Change this to err.message to provide better error information
+    });
+  }
+});
+
+app.get('/genre-list-manga', async (req, res) => {
+  try {
+    const page = req.query.page;
+    const data = await scrapeGenreManga({ page: page });
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({
