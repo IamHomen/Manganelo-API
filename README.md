@@ -223,7 +223,7 @@ Output >>
 
 | Parameter      | Description                                                                          |
 | -------------- | ------------------------------------------------------------------------------------ |
-| `:id` (string) | **mangaId can be found in every response body as can be seen in the above examples** |
+| `:mangaId` (string) | **mangaId can be found in every response body as can be seen in the above examples** |
 
 ```js
 fetch("https://gogoanime.consumet.stream/anime-details/naruto")
