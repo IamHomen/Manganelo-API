@@ -26,7 +26,7 @@
   - [Get New Manga](#get-new-manga)
   - [Get Manga Search](#get-manga-search)
   - [Get Top Completed Manga](#get-top-completed-manga)
-  - [Get Anime Genres](#get-anime-genres)
+  - [Get Manga Genre List](#get-manga-genre-list)
     - [Genres](#genres)
   - [Get Manga Details](#get-manga-details)
   - [Currently supported sites](#currently-supported-sites)
@@ -279,6 +279,204 @@ Output >>
         ...
     ]
 }
+```
+
+### Get Manga Genre List
+
+| Parameter         | Description                           |
+| ----------------- | ------------------------------------- |
+| `:genre` (string) | [Genres are avaliable below](#genres) |
+
+#### Genres
+<details>
+<summary>Genres list</summary>
+</details>
+&nbsp;
+
+```js
+fetch("http://localhost:3000/genre-list-manga")
+  .then((response) => response.json())
+  .then((mangalist) => console.log(mangalist));
+```
+
+Output >>
+
+```json
+[
+  {
+    "genreId": "https://m.manganelo.com/genre-all-update-latest",
+    "genreTitle": "ALL"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-2",
+    "genreTitle": "Action"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-3",
+    "genreTitle": "Adult"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-4",
+    "genreTitle": "Adventure"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-6",
+    "genreTitle": "Comedy"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-7",
+    "genreTitle": "Cooking"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-9",
+    "genreTitle": "Doujinshi"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-10",
+    "genreTitle": "Drama"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-11",
+    "genreTitle": "Ecchi"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-48",
+    "genreTitle": "Erotica"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-12",
+    "genreTitle": "Fantasy"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-13",
+    "genreTitle": "Gender bender"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-14",
+    "genreTitle": "Harem"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-15",
+    "genreTitle": "Historical"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-16",
+    "genreTitle": "Horror"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-45",
+    "genreTitle": "Isekai"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-17",
+    "genreTitle": "Josei"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-44",
+    "genreTitle": "Manhua"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-43",
+    "genreTitle": "Manhwa"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-19",
+    "genreTitle": "Martial arts"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-20",
+    "genreTitle": "Mature"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-21",
+    "genreTitle": "Mecha"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-22",
+    "genreTitle": "Medical"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-24",
+    "genreTitle": "Mystery"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-25",
+    "genreTitle": "One shot"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-47",
+    "genreTitle": "Pornographic"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-26",
+    "genreTitle": "Psychological"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-27",
+    "genreTitle": "Romance"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-28",
+    "genreTitle": "School life"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-29",
+    "genreTitle": "Sci fi"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-30",
+    "genreTitle": "Seinen"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-31",
+    "genreTitle": "Shoujo"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-32",
+    "genreTitle": "Shoujo ai"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-33",
+    "genreTitle": "Shounen"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-34",
+    "genreTitle": "Shounen ai"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-35",
+    "genreTitle": "Slice of life"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-36",
+    "genreTitle": "Smut"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-37",
+    "genreTitle": "Sports"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-38",
+    "genreTitle": "Supernatural"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-39",
+    "genreTitle": "Tragedy"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-40",
+    "genreTitle": "Webtoons"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-41",
+    "genreTitle": "Yaoi"
+  },
+  {
+    "genreId": "https://m.manganelo.com/genre-42",
+    "genreTitle": "Yuri"
+  },
+    {...},
+    ...
 ```
 
 ### Get Streaming URLs
