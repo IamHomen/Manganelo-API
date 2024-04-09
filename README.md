@@ -17,9 +17,9 @@
 
 - [Installation](#installation)
   - [Local](#local)
-  - [Heroku](#heroku)
+  <!--- [Heroku](#heroku)
   - [Render](#render)
-  - [Railway](#railway)
+  - [Railway](#railway)-->
 - [Routes](#routes)
   - [Get Latest Update](#get-latest-update)
   - [Get Top Manga](#get-top-manga)
@@ -55,7 +55,7 @@ This will start the server on port 3000. You can access the server at http://loc
 
 You can add `-d` flag to run the server in detached mode.
 
-### Heroku
+<!--### Heroku
 Host your own instance of the api on heroku using the button below.
 
 [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/riimuru/gogoanime/tree/main)
@@ -68,7 +68,7 @@ Host your own instance of the api on render using the button below.
 ### Railway
 Host your own instance of the api on railway using the button below.
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/Lg6DEp?referralCode=dv4TuD)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/Lg6DEp?referralCode=dv4TuD)-->
 
 ## Routes
 Below you'll find examples using [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) but you can use any other http library out there.
