@@ -17,9 +17,9 @@
 
 - [Installation](#installation)
   - [Local](#local)
-  - [Heroku](#heroku)
+ <!-- - [Heroku](#heroku)
   - [Render](#render)
-  - [Railway](#railway)
+  - [Railway](#railway)-->
 - [Routes](#routes)
   - [Get Latest Update](#get-latest-update)
   - [Get Top Manga](#get-top-manga)
