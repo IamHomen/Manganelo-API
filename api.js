@@ -25,7 +25,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.status(200).json('Welcome to the Manga API made by MrCain!');
+  res.status(200).json('Welcome to the Manganelo API made by Homen!');
 });
 
 app.get('/latest-manga', async (req, res) => {

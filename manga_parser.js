@@ -1,5 +1,5 @@
 import axios from 'axios';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 const base_url = `https://chapmanganelo.com/`;
 const recent_release_url = `https://m.manganelo.com/genre-all-update-latest`;
