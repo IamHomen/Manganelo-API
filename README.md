@@ -1,12 +1,12 @@
 <p align="center">
   <a href="https://github.com/riimuru/gogoanime">
-    <img src="https://m.manganelo.com/themes/hm/images/logo.png" alt="Logo" width="85" height="85">
+    <img src="https://www.natomanga.com/images/logo-manganato.webp" alt="Logo" width="85" height="85">
   </a>
 
   <h3 align="center">Manganelo API (Ongoing)</h3>
 
   <p align="center">
-    <samp>A free manga reading restful API serving manga from <a href="https://m.manganelo.com/">Manganelo</a></samp>
+    <samp>A free manga reading restful API serving manga from <a href="https://www.natomanga.com/">NatoManga</a></samp>
     <br />
     <a href="#routes"><strong>Explore the api »</strong></a>
     <br />
