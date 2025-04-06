@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://docs-natomanga-api.vercel.app/">
+  <a href="https://docs-natomanga-api.vercel.app/" target="_blank">
     <img alt="NatoManga" src="https://natomangaapi.onrender.com/proxy-image?url=https://www.natomanga.com/images/logo-manganato.webp" width="150">
   </a>
 </p>
