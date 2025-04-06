@@ -7,7 +7,7 @@ const recent_release_url = `${base_url}manga-list/latest-manga?page=`;
 const hot_url = `${base_url}manga-list/hot-manga?page=`;
 const new_manga_url = `https://www.natomanga.com/manga-list/new-manga?page=`;
 const search_url = `${base_url}search/story/`;
-const top_completed_manga = `https://m.manganelo.com/advanced_search?s=all&sts=completed&orby=topview&page=`;
+const completed_manga = `${base_url}manga-list/completed-manga?page=`;
 
 const headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
@@ -39,6 +39,36 @@ export const scrapeLatestManga = async ({ list = [], page = 1 }) => {
         const html = await getCachedOrFetch(url);
         const $ = cheerio.load(html);
 
+        const getTotalPages = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const totalPages = $(paginationLinks[paginationLinks.length - 1]).attr('href').match(/page=(\d+)/)[1];
+            return parseInt(totalPages);
+        };
+        
+        const getCurrentPage = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const currentPage = $('.panel_page_number .group_page a.page_select').text().trim();
+            if (!currentPage) {
+                throw new Error('Current page not found');
+            }
+            return parseInt(currentPage);
+        };
+        
+        const getTotalResults = ($) => {
+            const totalResults = $('.panel_page_number .group_qty a').text().trim().match(/Total: (\d+)/)[1];
+            if (!totalResults) {
+                throw new Error('Total results not found');
+            }
+            return parseInt(totalResults);
+        };
+
+        const mangaList = [];
         $('div.list-truyen-item-wrap').each((_, el) => {
             const title = $(el).find("h3 a").text().trim();
             const cover = $(el).find(".list-story-item.bookmark_check.cover img").attr("data-src") || $(el).find("a.cover img").attr("src");
@@ -46,22 +76,65 @@ export const scrapeLatestManga = async ({ list = [], page = 1 }) => {
             const latest_chapter = $(el).find("a.list-story-item-wrap-chapter").text().trim();
             const latest_chapter_id = $(el).find("a.list-story-item-wrap-chapter").attr("href").match(/chapter-\d+/)?.[0] || '';
             const views = $(el).find("div span.aye_icon").text().trim();
-            list.push({ title, cover, id, latest_chapter, latest_chapter_id, views });
+            mangaList.push({ title, cover, id, latest_chapter, latest_chapter_id, views });
         });
 
-        return list;
+        const totalPages = getTotalPages($);
+        const currentPage = getCurrentPage($);
+        const totalResults = getTotalResults($);
+
+        const response = {
+            currentPage: currentPage.toString(),
+            totalResults: totalResults.toString(),
+            hasNextPage: currentPage < totalPages,
+            hasPrevPage: currentPage > 1,
+            results: mangaList
+        };
+
+        return response;
     } catch (err) {
         throw err;
     }
 };
+
 
 export const scrapeHotManga = async ({ list = [], page = 1 }) => {
     try {
         const html = await getCachedOrFetch(`${hot_url}${page}`);
         const $ = cheerio.load(html);
 
+        const getTotalPages = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const totalPages = $(paginationLinks[paginationLinks.length - 1]).attr('href').match(/page=(\d+)/)[1];
+            return parseInt(totalPages);
+        };
+
+        const getCurrentPage = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const currentPage = $('.panel_page_number .group_page a.page_select').text().trim();
+            if (!currentPage) {
+                throw new Error('Current page not found');
+            }
+            return parseInt(currentPage);
+        };
+
+        const getTotalResults = ($) => {
+            const totalResults = $('.panel_page_number .group_qty a').text().trim().match(/Total: (\d+)/)[1];
+            if (!totalResults) {
+                throw new Error('Total results not found');
+            }
+            return parseInt(totalResults);
+        };
+
+        const mangaList = [];
         $('.truyen-list .list-truyen-item-wrap').each((_, el) => {
-            list.push({
+            mangaList.push({
                 title: $(el).find("h3 a").text().trim(),
                 cover: $(el).find(".cover img").attr("src"),
                 id: $(el).find("h3 a").attr("href").split('/').pop(),
@@ -71,7 +144,20 @@ export const scrapeHotManga = async ({ list = [], page = 1 }) => {
                 description: $(el).find("p").text().trim(),
             });
         });
-        return list;
+
+        const totalPages = getTotalPages($);
+        const currentPage = getCurrentPage($);
+        const totalResults = getTotalResults($);
+
+        const response = {
+            currentPage: currentPage.toString(),
+            totalResults: totalResults.toString(),
+            hasNextPage: currentPage < totalPages,
+            hasPrevPage: currentPage > 1,
+            results: mangaList
+        };
+
+        return response;
     } catch (err) {
         throw err;
     }
@@ -82,8 +168,38 @@ export const scrapeNewManga = async ({ list = [], page = 1 }) => {
         const html = await getCachedOrFetch(`${new_manga_url}${page}`);
         const $ = cheerio.load(html);
 
+        const getTotalPages = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const totalPages = $(paginationLinks[paginationLinks.length - 1]).attr('href').match(/page=(\d+)/)[1];
+            return parseInt(totalPages);
+        };
+
+        const getCurrentPage = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const currentPage = $('.panel_page_number .group_page a.page_select').text().trim();
+            if (!currentPage) {
+                throw new Error('Current page not found');
+            }
+            return parseInt(currentPage);
+        };
+
+        const getTotalResults = ($) => {
+            const totalResults = $('.panel_page_number .group_qty a').text().trim().match(/Total: (\d+)/)[1];
+            if (!totalResults) {
+                throw new Error('Total results not found');
+            }
+            return parseInt(totalResults);
+        };
+
+        const mangaList = [];
         $('.truyen-list .list-truyen-item-wrap').each((_, el) => {
-            list.push({
+            mangaList.push({
                 title: $(el).find("h3 a").text().trim(),
                 cover: $(el).find(".cover img").attr("src"),
                 id: $(el).find("h3 a").attr("href").split('/').pop(),
@@ -93,19 +209,58 @@ export const scrapeNewManga = async ({ list = [], page = 1 }) => {
                 description: $(el).find("p").text().trim(),
             });
         });
-        return list;
+
+        const totalPages = getTotalPages($);
+        const currentPage = getCurrentPage($);
+        const totalResults = getTotalResults($);
+
+        const response = {
+            currentPage: currentPage.toString(),
+            totalResults: totalResults.toString(),
+            hasNextPage: currentPage < totalPages,
+            hasPrevPage: currentPage > 1,
+            results: mangaList
+        };
+
+        return response;
     } catch (err) {
         throw err;
     }
 };
 
-export const scrapeSearch = async ({ list = [], keyw, page = 1 }) => {
+export const scrapeSearch = async ({ keyw, page = 1 }) => {
     try {
         const html = await getCachedOrFetch(`${search_url}${keyw}?page=${page}`);
         const $ = cheerio.load(html);
 
+        const getTotalPages = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const totalPages = $(paginationLinks[paginationLinks.length - 1]).attr('href').match(/page=(\d+)/)[1];
+            return parseInt(totalPages);
+        };
+
+        const getCurrentPage = ($) => {
+            const currentPage = $('.panel_page_number .group_page .page_select').text().trim();
+            if (!currentPage) {
+                throw new Error('Current page not found');
+            }
+            return parseInt(currentPage);
+        };
+
+        const getTotalResults = ($) => {
+            const totalResults = $('.panel_page_number .group_qty div').text().trim().match(/Total: (\d+)/)[1];
+            if (!totalResults) {
+                throw new Error('Total results not found');
+            }
+            return parseInt(totalResults);
+        };
+
+        const mangaList = [];
         $('div.story_item').each((_, el) => {
-            list.push({
+            mangaList.push({
                 title: $(el).find("div.story_item_right h3").text().trim(),
                 cover: $(el).find("a img").attr("src"),
                 id: $(el).find("a").attr("href").split('/').pop(),
@@ -114,29 +269,100 @@ export const scrapeSearch = async ({ list = [], keyw, page = 1 }) => {
             });
         });
 
-        return list;
+        const totalPages = getTotalPages($);
+        const currentPage = getCurrentPage($);
+        const totalResults = getTotalResults($);
+
+        const response = {
+            currentPage: currentPage.toString(),
+            totalResults: totalResults.toString(),
+            hasNextPage: currentPage < totalPages,
+            hasPrevPage: currentPage > 1,
+            results: mangaList
+        };
+
+        return response;
     } catch (err) {
         console.log(err);
         return { error: err };
     }
 };
 
-export const scrapeTopCompletedManga = async ({ list = [], page = 1 }) => {
+export const scrapeCompletedManga = async ({ list = [], page = 1 }) => {
     try {
-        const html = await getCachedOrFetch(`${top_completed_manga}${page}`);
+        const html = await getCachedOrFetch(`${completed_manga}${page}`);
         const $ = cheerio.load(html);
 
-        $('div.content-genres-item').each((_, el) => {
-            list.push({
-                mangaId: $(el).find('div.genres-item-info > a').attr('href'),
-                mangaTitle: $(el).find('div.genres-item-info > h3 > a').text(),
-                chapterNum: $(el).find('.genres-item-chap').text(),
-                views: $(el).find('.genres-item-view').text(),
-                mangaImg: $(el).find('a > img').attr('src'),
-                description: $(el).find('.genres-item-description').text(),
+        const getTotalPages = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const totalPages = $(paginationLinks[paginationLinks.length - 1]).attr('href').match(/page=(\d+)/)[1];
+            return parseInt(totalPages);
+        };
+
+        const getCurrentPage = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const currentPage = $('.panel_page_number .group_page a.page_select').text().trim();
+            if (!currentPage) {
+                const currentPageDiv = $('.panel_page_number .group_page div.page_select');
+                if (currentPageDiv.length > 0) {
+                    currentPage = currentPageDiv.text().trim();
+                } else {
+                    throw new Error('Current page not found');
+                }
+            }
+            return parseInt(currentPage);
+        };
+
+        const getTotalResults = ($) => {
+            const totalResults = $('.panel_page_number .group_qty a').text().trim().match(/Total: (\d+)/)[1];
+            if (!totalResults) {
+                const totalResultsDiv = $('.panel_page_number .group_qty div');
+                if (totalResultsDiv.length > 0) {
+                    const match = totalResultsDiv.text().trim().match(/Total: (\d+)/);
+                    if (match) {
+                        totalResults = match[1];
+                    } else {
+                        throw new Error('Total results not found');
+                    }
+                } else {
+                    throw new Error('Total results not found');
+                }
+            }
+            return parseInt(totalResults);
+        };
+
+        const mangaList = [];
+        $('.truyen-list .list-truyen-item-wrap').each((_, el) => {
+            mangaList.push({
+                title: $(el).find("h3 a").text().trim(),
+                cover: $(el).find(".cover img").attr("src"),
+                id: $(el).find("h3 a").attr("href").split('/').pop(),
+                latest_chapter: $(el).find(".list-story-item-wrap-chapter").text().trim(),
+                latest_chapter_id: $(el).find(".list-story-item-wrap-chapter").attr("href").match(/chapter-\d+/)?.[0] || '',
+                views: $(el).find(".aye_icon").text().trim(),
+                description: $(el).find("p").text().trim(),
             });
         });
-        return list;
+
+        const totalPages = getTotalPages($);
+        const currentPage = getCurrentPage($);
+        const totalResults = getTotalResults($);
+
+        const response = {
+            currentPage: currentPage.toString(),
+            totalResults: totalResults.toString(),
+            hasNextPage: currentPage < totalPages,
+            hasPrevPage: currentPage > 1,
+            results: mangaList
+        };
+
+        return response;
     } catch (err) {
         throw err;
     }
@@ -172,22 +398,5 @@ export const scrapeMangaDetails = async ({ id }) => {
     } catch (err) {
         console.log(err);
         return { error: err };
-    }
-};
-
-export const scrapeGenreManga = async ({ list = [] }) => {
-    try {
-        const html = await getCachedOrFetch(recent_release_url);
-        const $ = cheerio.load(html);
-
-        $('div.panel-genres-list > a').each((_, el) => {
-            list.push({
-                genreId: $(el).attr('href'),
-                genreTitle: $(el).text(),
-            });
-        });
-        return list;
-    } catch (err) {
-        throw err;
     }
 };

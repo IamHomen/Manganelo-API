@@ -3,13 +3,12 @@ import express from 'express';
 import axios from 'axios';
 
 import {
-  scrapeGenreManga,
   scrapeHotManga,
   scrapeLatestManga,
   scrapeMangaDetails,
   scrapeNewManga,
   scrapeSearch,
-  scrapeTopCompletedManga
+  scrapeCompletedManga
 } from './manga_parser.js';
 
 const app = express();
@@ -78,9 +77,9 @@ app.get('/search', asyncHandler(async (req, res) => {
   }
 }));
 
-app.get('/top-completed-manga', asyncHandler(async (req, res) => {
+app.get('/completed-manga', asyncHandler(async (req, res) => {
   try {
-    const data = await scrapeTopCompletedManga({ page: req.query.page });
+    const data = await scrapeCompletedManga({ page: req.query.page });
     res.status(200).json(data);
   } catch (err) {
     console.error('Error in /top-completed-manga:', err);
@@ -88,17 +87,7 @@ app.get('/top-completed-manga', asyncHandler(async (req, res) => {
   }
 }));
 
-app.get('/genre-list-manga', asyncHandler(async (req, res) => {
-  try {
-    const data = await scrapeGenreManga({ page: req.query.page });
-    res.status(200).json(data);
-  } catch (err) {
-    console.error('Error in /genre-list-manga:', err);
-    throw err;
-  }
-}));
-
-app.get('/manga-details/:id', asyncHandler(async (req, res) => {
+app.get('/details/:id', asyncHandler(async (req, res) => {
   try {
     const data = await scrapeMangaDetails({ id: req.params.id });
     res.status(200).json(data);
