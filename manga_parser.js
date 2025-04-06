@@ -71,7 +71,7 @@ export const scrapeLatestManga = async ({ list = [], page = 1 }) => {
         const mangaList = [];
         $('div.list-truyen-item-wrap').each((_, el) => {
             const title = $(el).find("h3 a").text().trim();
-            const cover = $(el).find(".list-story-item.bookmark_check.cover img").attr("data-src") || $(el).find("a.cover img").attr("src");
+            const cover = "https://natomangaapi.onrender.com/proxy-image?url=" + $(el).find(".list-story-item.bookmark_check.cover img").attr("data-src") || $(el).find("a.cover img").attr("src");
             const id = $(el).find("h3 a").attr("href").split('/').pop();
             const latest_chapter = $(el).find("a.list-story-item-wrap-chapter").text().trim();
             const latest_chapter_id = $(el).find("a.list-story-item-wrap-chapter").attr("href").match(/chapter-\d+/)?.[0] || '';
@@ -136,7 +136,7 @@ export const scrapeHotManga = async ({ list = [], page = 1 }) => {
         $('.truyen-list .list-truyen-item-wrap').each((_, el) => {
             mangaList.push({
                 title: $(el).find("h3 a").text().trim(),
-                cover: $(el).find(".cover img").attr("src"),
+                cover: "https://natomangaapi.onrender.com/proxy-image?url=" + $(el).find(".cover img").attr("src"),
                 id: $(el).find("h3 a").attr("href").split('/').pop(),
                 latest_chapter: $(el).find(".list-story-item-wrap-chapter").text().trim(),
                 latest_chapter_id: $(el).find(".list-story-item-wrap-chapter").attr("href").match(/chapter-\d+/)?.[0] || '',
@@ -201,7 +201,7 @@ export const scrapeNewManga = async ({ list = [], page = 1 }) => {
         $('.truyen-list .list-truyen-item-wrap').each((_, el) => {
             mangaList.push({
                 title: $(el).find("h3 a").text().trim(),
-                cover: $(el).find(".cover img").attr("src"),
+                cover: "https://natomangaapi.onrender.com/proxy-image?url=" + $(el).find(".cover img").attr("src"),
                 id: $(el).find("h3 a").attr("href").split('/').pop(),
                 latest_chapter: $(el).find(".list-story-item-wrap-chapter").text().trim(),
                 latest_chapter_id: $(el).find(".list-story-item-wrap-chapter").attr("href").match(/chapter-\d+/)?.[0] || '',
@@ -262,7 +262,7 @@ export const scrapeSearch = async ({ keyw, page = 1 }) => {
         $('div.story_item').each((_, el) => {
             mangaList.push({
                 title: $(el).find("div.story_item_right h3").text().trim(),
-                cover: $(el).find("a img").attr("src"),
+                cover: "https://natomangaapi.onrender.com/proxy-image?url=" + $(el).find("a img").attr("src"),
                 id: $(el).find("a").attr("href").split('/').pop(),
                 views: $(el).find("div.story_item_right span").last().text().replace('View :', '').trim(), 
                 updated: $(el).find("div.story_item_right span").eq(1).text().replace('Updated :', '').trim(),
@@ -341,7 +341,7 @@ export const scrapeCompletedManga = async ({ list = [], page = 1 }) => {
         $('.truyen-list .list-truyen-item-wrap').each((_, el) => {
             mangaList.push({
                 title: $(el).find("h3 a").text().trim(),
-                cover: $(el).find(".cover img").attr("src"),
+                cover: "https://natomangaapi.onrender.com/proxy-image?url=" + $(el).find(".cover img").attr("src"),
                 id: $(el).find("h3 a").attr("href").split('/').pop(),
                 latest_chapter: $(el).find(".list-story-item-wrap-chapter").text().trim(),
                 latest_chapter_id: $(el).find(".list-story-item-wrap-chapter").attr("href").match(/chapter-\d+/)?.[0] || '',
@@ -374,7 +374,7 @@ export const scrapeMangaDetails = async ({ id }) => {
         const $ = cheerio.load(html);
 
         const title = $(".manga-info-text h1").text().trim();
-        const cover = $(".manga-info-pic img").attr("src");
+        const cover = "https://natomangaapi.onrender.com/proxy-image?url=" + $(".manga-info-pic img").attr("src");
         const author = $(".manga-info-text li:contains('Author') a").text().trim() || "Unknown";
         const description = $("#contentBox").text().trim();
         const updated = $(".manga-info-text li:contains('Last updated')").text().replace("Last updated :", "").trim();
