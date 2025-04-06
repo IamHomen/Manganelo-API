@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center">
-  Consumet API
+  NatoManga API
 </h1>
 <p align="center">
   NatoManga API provides an APIs for accessing information and links for NatoManga .
