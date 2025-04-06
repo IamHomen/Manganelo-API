@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://consumet.org/">
-    <img alt="NatoManga" src="https://www.natomanga.com/images/logo-manganato.webp" width="150">
+  <a href="https://docs-natomanga-api.vercel.app/">
+    <img alt="NatoManga" src="https://natomangaapi.onrender.com/proxy-image?url=https://www.natomanga.com/images/logo-manganato.webp" width="150">
   </a>
 </p>
 
