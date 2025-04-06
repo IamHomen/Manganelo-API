@@ -10,17 +10,6 @@
 <p align="center">
   NatoManga API provides an APIs for accessing information and links for NatoManga .
 </p>
-<p align="center">
-    <a href="https://github.com/consumet/api.consumet.org/actions/workflows/codeql-analysis.yml">
-      <img src="https://github.com/consumet/api.consumet.org/actions/workflows/codeql-analysis.yml/badge.svg" alt="Discord">
-    </a>
-    <a href="https://discord.gg/qTPfvMxzNH">
-      <img src="https://img.shields.io/discord/987492554486452315?color=7289da&label=discord&logo=discord&logoColor=7289da" alt="Discord">
-    </a>
-    <a href="https://github.com/consumet/api/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/consumet/api" alt="GitHub">
-  </a>
-</p>
 
 NatoManga API scrapes data from NatoManga and provides APIs for accessing the data to satisfy your needs.
 
