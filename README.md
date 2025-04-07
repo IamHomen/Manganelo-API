@@ -4,6 +4,16 @@
   </a>
 </p>
 
+## Current Date and Time
+
+### UTC
+* Date: **{{ site.time | date: "%Y-%m-%d" }}**
+* Time: **{{ site.time | date: "%H:%M:%S" }}**
+
+### Local Time (Your Time Zone)
+* Date: **{{ site.time | date: "%Y-%m-%d" | date_in_timezone: "your_time_zone" }}**
+* Time: **{{ site.time | date: "%H:%M:%S" | date_in_timezone: "your_time_zone" }}**
+
 <h1 align="center">
   Homen API
 </h1>
