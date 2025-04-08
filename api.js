@@ -9,7 +9,16 @@ import {
   scrapeNewManga,
   scrapeSearch,
   scrapeCompletedManga
-} from './manga_parser.js';
+} from './src/type/manga/natomanga_parser.js';
+
+import {
+  scrapeAsuraSortManga
+} from './src/type/manga/asurascans_parser.js';
+
+import {
+  scrapeAnisaLatestManga,
+  scrapeAnisaSearchManga
+} from './src/type/manga/anisascans_parser.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,7 +32,7 @@ app.use(express.json());
 
 // Root route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the NatoManga API made by Homen!' });
+  res.status(200).json({ message: 'Welcome to the Homen API made by Homen!' });
 });
 
 // Utility wrapper for async routes
@@ -36,8 +45,8 @@ const asyncHandler = (fn) => (req, res) =>
     })
   );
 
-// Routes
-app.get('/latest-manga', asyncHandler(async (req, res) => {
+// NatoManga
+app.get('/manga/natomanga/latest-manga', asyncHandler(async (req, res) => {
   try {
     const data = await scrapeLatestManga({ page: req.query.page });
     res.status(200).json(data);
@@ -47,7 +56,7 @@ app.get('/latest-manga', asyncHandler(async (req, res) => {
   }
 }));
 
-app.get('/hot-manga', asyncHandler(async (req, res) => {
+app.get('/manga/natomanga/hot-manga', asyncHandler(async (req, res) => {
   try {
     const data = await scrapeHotManga({ page: req.query.page });
     res.status(200).json(data);
@@ -57,7 +66,7 @@ app.get('/hot-manga', asyncHandler(async (req, res) => {
   }
 }));
 
-app.get('/new-manga', asyncHandler(async (req, res) => {
+app.get('/manga/natomanga/new-manga', asyncHandler(async (req, res) => {
   try {
     const data = await scrapeNewManga({ page: req.query.page });
     res.status(200).json(data);
@@ -67,7 +76,7 @@ app.get('/new-manga', asyncHandler(async (req, res) => {
   }
 }));
 
-app.get('/search', asyncHandler(async (req, res) => {
+app.get('/manga/natomanga/search', asyncHandler(async (req, res) => {
   try {
     const data = await scrapeSearch({ keyw: req.query.keyw, page: req.query.page });
     res.status(200).json(data);
@@ -77,7 +86,7 @@ app.get('/search', asyncHandler(async (req, res) => {
   }
 }));
 
-app.get('/completed-manga', asyncHandler(async (req, res) => {
+app.get('/manga/natomanga/completed-manga', asyncHandler(async (req, res) => {
   try {
     const data = await scrapeCompletedManga({ page: req.query.page });
     res.status(200).json(data);
@@ -87,15 +96,53 @@ app.get('/completed-manga', asyncHandler(async (req, res) => {
   }
 }));
 
-app.get('/details/:id', asyncHandler(async (req, res) => {
+app.get('/manga/natomanga/details/:id', asyncHandler(async (req, res) => {
   try {
     const data = await scrapeMangaDetails({ id: req.params.id });
     res.status(200).json(data);
   } catch (err) {
-    console.error(`Error in /manga-details/${req.params.id}:`, err);
+    console.error(`Error in /manga/natomanga/manga-details/${req.params.id}:`, err);
     throw err;
   }
 }));
+
+// ====================================================================================== //
+//AsuraScans
+app.get('/manga/asurascans/sort-manga/:sort?', asyncHandler(async (req, res) => {
+  try {
+    const sort = req.params.sort || 'update';
+    const data = await scrapeAsuraSortManga({ page: req.query.page, sort });
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error in /sort-manga:', err);
+    throw err;
+  }
+}));
+
+// ====================================================================================== //
+//AnisaScans
+app.get('/manga/anisascans/latest-manga', asyncHandler(async (req, res) => {
+  try {
+    const data = await scrapeAnisaLatestManga({ page: req.query.page });
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error in /latest-manga:', err);
+    throw err;
+  }
+}));
+
+app.get('/manga/anisascans/search', asyncHandler(async (req, res) => {
+  try {
+    const data = await scrapeAnisaSearchManga({ keyw: req.query.keyw, page: req.query.page });
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error in /search:', err);
+    throw err;
+  }
+}));
+
+
+// ==============END=============== //
 
 // 🚀 Proxy Image with In-Memory Caching
 app.get("/proxy-image", async (req, res) => {
