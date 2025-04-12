@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import puppeteer from 'puppeteer';
 
 const base_url = "https://asuracomic.net/";
 const sort_manga_url = `${base_url}series?page=`;
@@ -50,7 +51,17 @@ const headers = {
 };
 
 
-// 🧠 Simple in-memory cache
+const browser = await puppeteer.launch({ headless: true });
+
+const getPageContent = async (url) => {
+    const page = await browser.newPage();
+    await page.setUserAgent(getRandomUserAgent());
+    await page.goto(url, { waitUntil: 'networkidle2' });
+    const content = await page.content();
+    await page.close();
+    return content;
+};
+
 const cache = new Map();
 const CACHE_TTL = 5 * 60 * 1000; // 5 mins
 
@@ -63,9 +74,9 @@ const getCachedOrFetch = async (url) => {
         }
     }
 
-    const res = await axios.get(url, { headers });
-    cache.set(url, { data: res.data, timestamp: now });
-    return res.data;
+    const data = await getPageContent(url);
+    cache.set(url, { data, timestamp: now });
+    return data;
 };
 
 export const scrapeAsuraSortManga = async ({ page = 1, sort = "update" }) => {
@@ -191,22 +202,25 @@ export const scrapeAsuraMangaDetails = async ({ id }) => {
             });
         });
 
-        return {
+        const response = {
+            id,
             title,
             cover,
             banner,
-            author,
-            serialization,
-            artist,
+            description,
             updated,
             status,
             type,
             rating,
             genres,
-            synopsis: description,
-            chapters,
-            related_series,
+            author,
+            serialization,
+            artist,
+            chapters: chapters.reverse(),
+            related_series
         };
+
+        return response;
     } catch (err) {
         console.log(err);
         return { error: err };
@@ -215,50 +229,19 @@ export const scrapeAsuraMangaDetails = async ({ id }) => {
 
 export const scrapeAsuraChapters = async ({ id, chapter_id }) => {
     try {
-        const url = `${mangaInfoBaseURL}${id}/chapter/${chapter_id}`;
-        const { data } = await axios.get(url);
-        const $ = cheerio.load(data);
+        const html = await getCachedOrFetch(`${mangaInfoBaseURL}${id}/chapter/${chapter_id}`);
+        const $ = cheerio.load(html);
 
-        const chapterLinks = $('.dropdown-content a');
-
-        const currentChapterText = $('.dropdown-btn h2').text();
-        const currentChapterNumber = parseInt(currentChapterText.replace('Chapter ', ''));
-
-        const totalChapters = chapterLinks.length;
-
-        const currentChapterPosition = Array.from(chapterLinks).findIndex(link => {
-            const linkChapterText = $(link).find('h2').text();
-            const linkChapterNumber = parseInt(linkChapterText.replace('Chapter ', ''));
-            return linkChapterNumber === currentChapterNumber;
-        }) + 1;
-
-        const chapMatch = data.replace(/\\/g, '').match(/pages.*:(\[{['"]order["'].*?}\])/);
-        if (!chapMatch) throw new Error('Parsing error');
-        const chap = JSON.parse(chapMatch[1]);
-
-        const chapterPages = chap.map((page, index) => ({
-            page: index + 1,
-            img: page.url,
-        }));
-
-        const paginationLinks = $('.flex.items-center.gap-x-3.flex-row.w-full.xs\\:w-40.justify-between.xs\\:self-end');
-        const nextLink = paginationLinks.find('a:has(.lucide-chevron-right)');
-        const prevLink = paginationLinks.find('a:has(.lucide-chevron-left)');
-
-        const hasNextPage = nextLink.length > 0;
-        const hasPrevPage = prevLink.length > 0;
-
-        const nextChapterId = hasNextPage ? nextLink.attr('href').split('/chapter/')[1] : null;
-        const prevChapterId = hasPrevPage ? prevLink.attr('href').split('/chapter/')[1] : null;
-
+        const chapterPages = [];
+        $(".flex.flex-col.items-center.justify-center > img").each((_, el) => {
+            const page = $(el).attr("src");
+            chapterPages.push(page);
+        });
         const response = {
-            id,
-            currentChapterNumber,
-            hasNextPage,
-            hasPrevPage,
-            nextChapterId,
-            prevChapterId,
-            chapterPages
+            current_chapter: {
+                id: chapter_id,
+                pages: chapterPages
+            }
         };
 
         return response;
