@@ -8,17 +8,25 @@ import {
   scrapeMangaDetails,
   scrapeNewManga,
   scrapeSearch,
-  scrapeCompletedManga
+  scrapeCompletedManga,
+  scrapeNatoMangaChapters
 } from './src/type/manga/natomanga_parser.js';
 
 import {
-  scrapeAsuraSortManga
+  scrapeAsuraSortManga,
+  scrapeAsuraSearchManga,
+  scrapeAsuraMangaDetails,
+  scrapeAsuraChapters
 } from './src/type/manga/asurascans_parser.js';
 
 import {
   scrapeAnisaLatestManga,
   scrapeAnisaSearchManga
 } from './src/type/manga/anisascans_parser.js';
+
+import {
+  scrapeAltaySortManga
+} from './src/type/manga/altayscans_parser.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -106,6 +114,16 @@ app.get('/manga/natomanga/details/:id', asyncHandler(async (req, res) => {
   }
 }));
 
+app.get('/manga/natomanga/chapters/:id/:chapter_id', asyncHandler(async (req, res) => {
+  try {
+    const data = await scrapeNatoMangaChapters({ id: req.params.id, chapter_id: req.params.chapter_id });
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error in /chapters:', err);
+    throw err;
+  }
+}));
+
 // ====================================================================================== //
 //AsuraScans
 app.get('/manga/asurascans/sort-manga/:sort?', asyncHandler(async (req, res) => {
@@ -115,6 +133,36 @@ app.get('/manga/asurascans/sort-manga/:sort?', asyncHandler(async (req, res) => 
     res.status(200).json(data);
   } catch (err) {
     console.error('Error in /sort-manga:', err);
+    throw err;
+  }
+}));
+
+app.get('/manga/asurascans/search', asyncHandler(async (req, res) => {
+  try {
+    const data = await scrapeAsuraSearchManga({ page: req.query.page, keyw: req.query.keyw });
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error in /sort-manga:', err);
+    throw err;
+  }
+}));
+
+app.get('/manga/asurascans/details/:id', asyncHandler(async (req, res) => {
+  try {
+    const data = await scrapeAsuraMangaDetails({ id: req.params.id });
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error in /sort-manga:', err);
+    throw err;
+  }
+}));
+
+app.get('/manga/asurascans/chapters/:id/:chapter_id', asyncHandler(async (req, res) => {
+  try {
+    const data = await scrapeAsuraChapters({ id: req.params.id, chapter_id: req.params.chapter_id });
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error in /chapters:', err);
     throw err;
   }
 }));
@@ -141,6 +189,18 @@ app.get('/manga/anisascans/search', asyncHandler(async (req, res) => {
   }
 }));
 
+//=============ALTAYSCANS============//
+//AsuraScans
+app.get('/manga/altayscans/sort-manga/:sort?', asyncHandler(async (req, res) => {
+  try {
+    const sort = req.params.sort || 'update';
+    const data = await scrapeAltaySortManga({ page: req.query.page, sort });
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error in /sort-manga:', err);
+    throw err;
+  }
+}));
 
 // ==============END=============== //
 

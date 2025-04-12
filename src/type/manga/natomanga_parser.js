@@ -400,3 +400,89 @@ export const scrapeMangaDetails = async ({ id }) => {
         return { error: err };
     }
 };
+
+export const scrapeNatoMangaChapters = async ({ id, chapter_id }) => {
+    try {
+        const html = await getCachedOrFetch(`${mangaInfoBaseURL}${id}/${chapter_id}`);
+        const $ = cheerio.load(html);
+
+        const getTotalChapters = ($) => {
+            const options = $('.navi-change-chapter:first option');
+            return options.length;
+        };
+        
+        const getCurrentChapter = ($) => {
+            const selectedOption = $('.navi-change-chapter:first option[selected]');
+            return selectedOption.text().trim();
+        };
+
+        const getMangaId = ($) => {
+            const selectedOption = $('.navi-change-chapter:first option[selected]');
+            const dataC = selectedOption.attr('data-c').trim();
+            const parts = dataC.split('/');
+            return parts[2];
+        };
+        
+        const getHasNextChapter = ($) => {
+            const nextLink = $('.btn-navigation-chap .back');
+            return nextLink.length > 0;
+        };
+        
+        const getHasPrevChapter = ($) => {
+            const prevLink = $('.btn-navigation-chap .next');
+            return prevLink.length > 0;
+        };
+        
+        const getNextChapterLink = ($) => {
+            const nextLink = $('.btn-navigation-chap .back');
+            if (nextLink.length > 0) {
+                const href = nextLink.attr('href');
+                const parts = href.split('/');
+                return `${parts[3]}`;
+            }
+            return null;
+        };
+        
+        const getPrevChapterLink = ($) => {
+            const prevLink = $('.btn-navigation-chap .next');
+            if (prevLink.length > 0) {
+                const href = prevLink.attr('href');
+                const parts = href.split('/');
+                return `${parts[3]}`;
+            }
+            return null;
+        };
+
+        const totalChapters = getTotalChapters($);
+        const currentChapter = getCurrentChapter($);
+        const mangaId = getMangaId($);
+        const hasNextChapter = getHasNextChapter($);
+        const hasPrevChapter = getHasPrevChapter($);
+        const nextChapterLink = getNextChapterLink($);
+        const prevChapterLink = getPrevChapterLink($);
+
+        const chapterImages = [];
+        $('.container-chapter-reader img').each((_, el) => {
+            chapterImages.push({
+                src: $(el).attr('src'),
+                alt: $(el).attr('alt').replace(" - MangaNato", ""),
+                title: $(el).attr('title').replace(" - MangaNato", ""),
+            });
+        });
+        
+        const response = {
+            totalChapters: totalChapters.toString(),
+            id: mangaId,
+            currentChapter: currentChapter,
+            hasNextChapter: hasNextChapter,
+            hasPrevChapter: hasPrevChapter,
+            nextChapterId: nextChapterLink,
+            prevChapterId: prevChapterLink,
+            chapterImages: chapterImages,
+        };
+
+        return response;
+    } catch (err) {
+        throw err;
+    }
+};
