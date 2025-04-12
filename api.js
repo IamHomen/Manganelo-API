@@ -126,10 +126,11 @@ app.get('/manga/natomanga/chapters/:id/:chapter_id', asyncHandler(async (req, re
 
 // ====================================================================================== //
 //AsuraScans
-app.get('/manga/asurascans/sort-manga/:sort?', asyncHandler(async (req, res) => {
+app.get('/manga/asurascans/sort-manga', asyncHandler(async (req, res) => {
   try {
-    const sort = req.params.sort || 'update';
-    const data = await scrapeAsuraSortManga({ page: req.query.page, sort });
+    const sort = req.query.sort;
+    const page = req.query.page;
+    const data = await scrapeAsuraSortManga({ sort, page });
     res.status(200).json(data);
   } catch (err) {
     console.error('Error in /sort-manga:', err);
