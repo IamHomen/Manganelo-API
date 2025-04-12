@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://docs-natomanga-api.vercel.app/" target="_blank">
-    <img alt="Homen" src="https://natomangaapi.onrender.com/proxy-image?url=https://www.natomanga.com/images/logo-manganato.webp" width="150">
+    <img alt="HomenAPI" src="https://raw.githubusercontent.com/IamHomen/HomenAPI/refs/heads/main/src/assets/logo.jpeg" width="150">
   </a>
 </p>
 
