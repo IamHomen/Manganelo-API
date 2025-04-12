@@ -40,7 +40,50 @@ app.use(express.json());
 
 // Root route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Homen API made by Homen!' });
+  const routes = [
+    // NatoManga
+    { route: '/manga/natomanga/latest-manga', description: 'Get latest manga from NatoManga' },
+    { route: '/manga/natomanga/hot-manga', description: 'Get hot manga from NatoManga' },
+    { route: '/manga/natomanga/new-manga', description: 'Get new manga from NatoManga' },
+    { route: '/manga/natomanga/search', description: 'Search manga on NatoManga' },
+    { route: '/manga/natomanga/completed-manga', description: 'Get completed manga from NatoManga' },
+    { route: '/manga/natomanga/details/:id', description: 'Get manga details from NatoManga' },
+    { route: '/manga/natomanga/chapters/:id/:chapter_id', description: 'Get manga chapters from NatoManga' },
+    
+    // AsuraScans
+    { route: '/manga/asurascans/sort-manga', description: 'Get sorted manga from AsuraScans' },
+    { route: '/manga/asurascans/search', description: 'Search manga on AsuraScans' },
+    { route: '/manga/asurascans/details/:id', description: 'Get manga details from AsuraScans' },
+    { route: '/manga/asurascans/chapters/:id/:chapter_id', description: 'Get manga chapters from AsuraScans' },
+    
+    // AnisaScans
+    { route: '/manga/anisascans/latest-manga', description: 'Get latest manga from AnisaScans' },
+    { route: '/manga/anisascans/search', description: 'Search manga on AnisaScans' },
+    
+    // AltayScans
+    { route: '/manga/altayscans/sort-manga/:sort?', description: 'Get sorted manga from AltayScans' },
+    
+    // Proxy Image
+    { route: '/proxy-image', description: 'Proxy image' },
+  ];
+
+  const providers = [
+    { name: 'NatoManga', routes: routes.filter(route => route.route.includes('natomanga')) },
+    { name: 'AsuraScans', routes: routes.filter(route => route.route.includes('asurascans')) },
+    { name: 'AnisaScans', routes: routes.filter(route => route.route.includes('anisascans')) },
+    { name: 'AltayScans', routes: routes.filter(route => route.route.includes('altayscans')) },
+  ];
+
+  const message = {
+    welcome: 'Welcome to the Homen API!',
+    description: 'This API provides access to manga from various providers.',
+    providers: providers.map(provider => ({
+      name: provider.name,
+      routes: provider.routes.map(route => ({ route: route.route, description: route.description })),
+    })),
+  };
+
+  res.status(200).json(message);
 });
 
 // Utility wrapper for async routes
@@ -271,5 +314,5 @@ app.use((req, res) => {
 
 // Start server
 app.listen(port, () => {
-  console.log(`🚀 NatoManga API is live on port ${port}`);
+  console.log(`🚀 HomenAPI is live on port ${port}`);
 });

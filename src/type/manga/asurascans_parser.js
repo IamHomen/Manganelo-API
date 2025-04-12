@@ -7,12 +7,48 @@ const sort_advance_url = "&genres=&status=-1&types=-1&order=";
 const search_url = `${base_url}series?page=`;
 const mangaInfoBaseURL = "https://asuracomic.net/series/"
 
+const userAgents = [
+    // Chrome User Agents
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/135.0.7049.83 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPad; CPU OS 17_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/135.0.7049.83 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPod; CPU iPhone OS 17_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/135.0.7049.83 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 Mobile Safari/537.36",
+
+    // Firefox User Agents
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 14.7; rv:137.0) Gecko/20100101 Firefox/137.0",
+    "Mozilla/5.0 (X11; Linux i686; rv:137.0) Gecko/20100101 Firefox/137.0",
+    "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/137.0 Mobile/15E148 Safari/605.1.15",
+    "Mozilla/5.0 (iPad; CPU OS 14_7_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/137.0 Mobile/15E148 Safari/605.1.15",
+    "Mozilla/5.0 (Android 15; Mobile; rv:137.0) Gecko/137.0 Firefox/137.0",
+
+    // Safari User Agents
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_7_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPad; CPU OS 17_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Mobile/15E148 Safari/604.1",
+
+    // Yandex Browser User Agents
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 YaBrowser/25.2.5.940 Yowser/2.5 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 YaBrowser/25.2.5.940 Yowser/2.5 Safari/537.36",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 YaBrowser/25.4.0.1657 Mobile/15E148 Safari/604.1",
+    "Mozilla/5.0 (iPad; CPU OS 17_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 YaBrowser/25.4.0.1657 Mobile/15E148 Safari/605.1",
+    "Mozilla/5.0 (Linux; arm_64; Android 15; SM-G965F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 YaBrowser/25.2.8.97 Mobile Safari/537.36"
+];
+
+const getRandomUserAgent = () => {
+    return userAgents[Math.floor(Math.random() * userAgents.length)];
+};
+
 const headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+    "User-Agent": getRandomUserAgent(),
     "Referer": base_url,
-    "Cookie": "cf_clearance=VBcCQiaG6pS.ExBEBYz926_qIUF_FVzUD0MPf6Yu_3k-1744263165-1.2.1.1-zykXT0gk5QlKICPCL5WnM7wPXr7SL7yCHPGD.3uzig3eOY_RaUO7hVWmeKc9HY8lpjbncP37pYtojC_3Qb1XQNvZv3MizBk2h_l_x3_8U3shsCZmSdg.sE_R7zXzvPxeN99YnbVyJC6QPa2cyPx.8Iu3bl6zcl68R2pfiA8avGvvzEv4VGj8g8Y2ulQfQ2T03RexYOF48bM3ewlZWLi5Pg905uyrGxWmXkt7JHFxSvCMLKnuKkXRw75y0hu386ycDHtpaHC_jXcy9sC7zuVoB6aYiGQ8NebO5mp8i4mspJV8bMJ92a0I39XKUjFaFwJiQLeSyAbwwOtuxWjSZpTSKLrYqY67nX7Uew4x5yCJaPU; XSRF-TOKEN=eyJpdiI6InVLRFNXTEFubTRNQ1V0dWl3R3VBZGc9PSIsInZhbHVlIjoiNWpjanM0TFZSN0RsS091alBEZ3FybkVGTHJhZzRFaXZIanlQbmVld2pacEFmWVhnUDVzTTdmU2xZVHhFUEMvTU1ERk9KTHpCdTQyaGdqVUlaYlVQMVlmOER2czIvOWViYWhISjM3NllHd1VNeXJLZ1ROaGVwd3UwUFhiUGFmQ2kiLCJtYWMiOiJmM2I0NDk2N2YyODhlN2YyZjZjYTljNWIyN2RkNGUxYmRmY2Q2ODAzYmY2OWEzMjFkMWIzNGJlYjkwNmI3MDdhIiwidGFnIjoiIn0%3D; asurascans_session=eyJpdiI6IlUvckdxOFV2cjNZaTBJcmlkWnJvemc9PSIsInZhbHVlIjoicFdRZHBvTWlTU0p3a0IxQ0tqWUpOWGR4cFhJRndpR2d4b2R6b1dUNGJuTTd4d0VSVmRlMlVFQ1hRVXQ4TUJHSzlnMUJ6VTBVMW01Tmc2ZHZmNzZ1S244bXJqZDYzTUJCUTRyd3NtN3hSSHV4STlGWVA2aWp0SFJ1U3NuY1RWZnkiLCJtYWMiOiIwYTUzZmI3ZmQwYzk4ZWNhNDk0OTExYzZjYWZlMDMwZGU2YzAzYzI4NWUzMGVlYjdlOTZiZmQyNmZkZGNmM2JhIiwidGFnIjoiIn0%3D",
     "Accept-Language": "en-US,en;q=0.9",
 };
+
 
 // 🧠 Simple in-memory cache
 const cache = new Map();
