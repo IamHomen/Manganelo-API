@@ -1,5 +1,5 @@
 {
-  "name": "manganelo",
+  "name": "homen-api",
   "version": "1.0.0",
   "description": "",
   "main": "api.js",
@@ -12,7 +12,7 @@
     "reading",
     "discovery",
     "api",
-    "homeapi"
+    "homenapi"
   ],
   "author": "https://github.com/IamHomen",
   "license": "MIT",
@@ -24,6 +24,8 @@
     "crypto-js": "^4.2.0",
     "express": "^4.21.1",
     "he": "^1.2.0",
+    "pg": "^8.14.1",
+    "postgres": "^3.4.5",
     "random-useragent": "^0.5.0"
   }
 }

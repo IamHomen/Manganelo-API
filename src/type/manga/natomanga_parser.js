@@ -461,6 +461,8 @@ export const scrapeNatoMangaChapters = async ({ id, chapter_id }) => {
         const nextChapterLink = getNextChapterLink($);
         const prevChapterLink = getPrevChapterLink($);
 
+        const chapterTitle = $('.info-top-chapter h2').text().trim();
+
         const chapterImages = [];
         $('.container-chapter-reader img').each((_, el) => {
             chapterImages.push({
@@ -473,6 +475,7 @@ export const scrapeNatoMangaChapters = async ({ id, chapter_id }) => {
         const response = {
             totalChapters: totalChapters.toString(),
             id: mangaId,
+            chapterTitle,
             currentChapter: currentChapter,
             hasNextChapter: hasNextChapter,
             hasPrevChapter: hasPrevChapter,
