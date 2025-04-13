@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import puppeteer from 'puppeteer';
+import randomUseragent from 'random-useragent';
 
 const base_url = "https://asuracomic.net/";
 const sort_manga_url = `${base_url}series?page=`;
@@ -8,62 +8,18 @@ const sort_advance_url = "&genres=&status=-1&types=-1&order=";
 const search_url = `${base_url}series?page=`;
 const mangaInfoBaseURL = "https://asuracomic.net/series/"
 
-const userAgents = [
-    // Chrome User Agents
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/135.0.7049.83 Mobile/15E148 Safari/604.1",
-    "Mozilla/5.0 (iPad; CPU OS 17_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/135.0.7049.83 Mobile/15E148 Safari/604.1",
-    "Mozilla/5.0 (iPod; CPU iPhone OS 17_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/135.0.7049.83 Mobile/15E148 Safari/604.1",
-    "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 Mobile Safari/537.36",
+const userAgent = randomUseragent.getRandom();
 
-    // Firefox User Agents
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:137.0) Gecko/20100101 Firefox/137.0",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 14.7; rv:137.0) Gecko/20100101 Firefox/137.0",
-    "Mozilla/5.0 (X11; Linux i686; rv:137.0) Gecko/20100101 Firefox/137.0",
-    "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0",
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/137.0 Mobile/15E148 Safari/605.1.15",
-    "Mozilla/5.0 (iPad; CPU OS 14_7_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/137.0 Mobile/15E148 Safari/605.1.15",
-    "Mozilla/5.0 (Android 15; Mobile; rv:137.0) Gecko/137.0 Firefox/137.0",
-
-    // Safari User Agents
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_7_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15",
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Mobile/15E148 Safari/604.1",
-    "Mozilla/5.0 (iPad; CPU OS 17_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Mobile/15E148 Safari/604.1",
-
-    // Yandex Browser User Agents
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 YaBrowser/25.2.5.940 Yowser/2.5 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 YaBrowser/25.2.5.940 Yowser/2.5 Safari/537.36",
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 YaBrowser/25.4.0.1657 Mobile/15E148 Safari/604.1",
-    "Mozilla/5.0 (iPad; CPU OS 17_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 YaBrowser/25.4.0.1657 Mobile/15E148 Safari/605.1",
-    "Mozilla/5.0 (Linux; arm_64; Android 15; SM-G965F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 YaBrowser/25.2.8.97 Mobile Safari/537.36"
-];
-
-const getRandomUserAgent = () => {
-    return userAgents[Math.floor(Math.random() * userAgents.length)];
-};
+console.log(userAgent);
 
 const headers = {
-    "User-Agent": getRandomUserAgent(),
+    "User-Agent": userAgent,
     "Referer": base_url,
     "Accept-Language": "en-US,en;q=0.9",
 };
 
-const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
 
-const getPageContent = async (url) => {
-    const page = await browser.newPage();
-    await page.setUserAgent(getRandomUserAgent());
-    await page.goto(url, { waitUntil: 'networkidle2' });
-    const content = await page.content();
-    await page.close();
-    return content;
-};
-
+// 🧠 Simple in-memory cache
 const cache = new Map();
 const CACHE_TTL = 5 * 60 * 1000; // 5 mins
 
@@ -76,9 +32,9 @@ const getCachedOrFetch = async (url) => {
         }
     }
 
-    const data = await getPageContent(url);
-    cache.set(url, { data, timestamp: now });
-    return data;
+    const res = await axios.get(url, { headers });
+    cache.set(url, { data: res.data, timestamp: now });
+    return res.data;
 };
 
 export const scrapeAsuraSortManga = async ({ page = 1, sort = "update" }) => {
@@ -204,25 +160,22 @@ export const scrapeAsuraMangaDetails = async ({ id }) => {
             });
         });
 
-        const response = {
-            id,
+        return {
             title,
             cover,
             banner,
-            description,
+            author,
+            serialization,
+            artist,
             updated,
             status,
             type,
             rating,
             genres,
-            author,
-            serialization,
-            artist,
-            chapters: chapters.reverse(),
-            related_series
+            synopsis: description,
+            chapters,
+            related_series,
         };
-
-        return response;
     } catch (err) {
         console.log(err);
         return { error: err };
@@ -231,19 +184,50 @@ export const scrapeAsuraMangaDetails = async ({ id }) => {
 
 export const scrapeAsuraChapters = async ({ id, chapter_id }) => {
     try {
-        const html = await getCachedOrFetch(`${mangaInfoBaseURL}${id}/chapter/${chapter_id}`);
-        const $ = cheerio.load(html);
+        const url = `${mangaInfoBaseURL}${id}/chapter/${chapter_id}`;
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
 
-        const chapterPages = [];
-        $(".flex.flex-col.items-center.justify-center > img").each((_, el) => {
-            const page = $(el).attr("src");
-            chapterPages.push(page);
-        });
+        const chapterLinks = $('.dropdown-content a');
+
+        const currentChapterText = $('.dropdown-btn h2').text();
+        const currentChapterNumber = parseInt(currentChapterText.replace('Chapter ', ''));
+
+        const totalChapters = chapterLinks.length;
+
+        const currentChapterPosition = Array.from(chapterLinks).findIndex(link => {
+            const linkChapterText = $(link).find('h2').text();
+            const linkChapterNumber = parseInt(linkChapterText.replace('Chapter ', ''));
+            return linkChapterNumber === currentChapterNumber;
+        }) + 1;
+
+        const chapMatch = data.replace(/\\/g, '').match(/pages.*:(\[{['"]order["'].*?}\])/);
+        if (!chapMatch) throw new Error('Parsing error');
+        const chap = JSON.parse(chapMatch[1]);
+
+        const chapterPages = chap.map((page, index) => ({
+            page: index + 1,
+            img: page.url,
+        }));
+
+        const paginationLinks = $('.flex.items-center.gap-x-3.flex-row.w-full.xs\\:w-40.justify-between.xs\\:self-end');
+        const nextLink = paginationLinks.find('a:has(.lucide-chevron-right)');
+        const prevLink = paginationLinks.find('a:has(.lucide-chevron-left)');
+
+        const hasNextPage = nextLink.length > 0;
+        const hasPrevPage = prevLink.length > 0;
+
+        const nextChapterId = hasNextPage ? nextLink.attr('href').split('/chapter/')[1] : null;
+        const prevChapterId = hasPrevPage ? prevLink.attr('href').split('/chapter/')[1] : null;
+
         const response = {
-            current_chapter: {
-                id: chapter_id,
-                pages: chapterPages
-            }
+            id,
+            currentChapterNumber,
+            hasNextPage,
+            hasPrevPage,
+            nextChapterId,
+            prevChapterId,
+            chapterPages
         };
 
         return response;

@@ -12,10 +12,10 @@
     "reading",
     "discovery",
     "api",
-    "manganelo"
+    "homeapi"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "https://github.com/IamHomen",
+  "license": "MIT",
   "type": "module",
   "dependencies": {
     "axios": "^1.7.7",
@@ -24,6 +24,6 @@
     "crypto-js": "^4.2.0",
     "express": "^4.21.1",
     "he": "^1.2.0",
-    "puppeteer": "^24.6.1"
+    "random-useragent": "^0.5.0"
   }
 }
