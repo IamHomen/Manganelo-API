@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 
 const base_url = "https://asuracomic.net/";
 const sort_manga_url = `${base_url}series?page=`;
@@ -50,8 +50,9 @@ const headers = {
     "Accept-Language": "en-US,en;q=0.9",
 };
 
-const browser = await puppeteer.connect({
-    browserWSEndpoint: 'wss://chrome.browserless.io?token=S7SpTDyNw21pH5989195a08d278e1ea8d29f26022a',
+const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 
 const getPageContent = async (url) => {
