@@ -1,8 +1,8 @@
 services:
   - type: web
-    name: natomanga-api # Name of the service
+    name: homen-api # Name of the service
     env: docker
-    repo: https://github.com/IamHomen/NatoMangaAPI.git
+    repo: https://github.com/IamHomen/HomenAPI.git
     plan: free
     branch: main
     envVars:

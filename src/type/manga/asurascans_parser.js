@@ -10,11 +10,34 @@ const mangaInfoBaseURL = "https://asuracomic.net/series/"
 
 const userAgent = randomUseragent.getRandom();
 
+const referers = [
+    // Chrome User Agents
+    "https://asuracomic.net/series/the-heavenly-demon-wants-a-quiet-life-f786833a",
+    "https://asuracomic.net/series/artifact-devouring-player-a252d7ac",
+    "https://asuracomic.net/series/the-fox-eyed-villain-of-the-demon-academy-4f9be980",
+    "https://asuracomic.net/series/academys-genius-swordmaster-ad7e75da",
+    "https://asuracomic.net/series/the-last-adventurer-f0f4fa1f",
+    "https://asuracomic.net/series/i-became-the-successor-of-the-martial-god-822a2366",
+    "https://asuracomic.net/series/killer-pietro-31d00e63",
+    "https://asuracomic.net/series/the-knight-king-who-returned-with-a-god-6a7d01c4",
+    "https://asuracomic.net/series/steel-eating-player-fdc6da55",
+    "https://asuracomic.net/series/surviving-the-game-as-a-barbarian-fc064f0d",
+    "https://asuracomic.net/series/the-illegitimate-who-devours-weapons-ebf2be74",
+    "https://asuracomic.net/series/genius-of-the-unique-lineage-3f1c09a2",
+    "https://asuracomic.net/series/logging-10000-years-into-the-future-cae958e9",
+    "https://asuracomic.net/series/im-gonna-annihilate-this-land-4f3696b3",
+    "https://asuracomic.net/series/legend-of-the-reincarnated-demon-god-18eeabb0"
+]
+const getRandomReferrer = () => {
+    return referers[Math.floor(Math.random() * referers.length)];
+};
+
 console.log(userAgent);
+console.log(getRandomReferrer());
 
 const headers = {
     "User-Agent": userAgent,
-    "Referer": base_url,
+    "Referer": getRandomReferrer(),
     "Accept-Language": "en-US,en;q=0.9",
 };
 
@@ -69,7 +92,10 @@ export const scrapeAsuraSortManga = async ({ page = 1, sort = "update" }) => {
 
         return response;
     } catch (err) {
-        throw err;
+        return {
+            error: true,
+            message: `Failed to scrape manga data: ${err.message} Page: ${page}, Sort: ${sort}`,
+          };
     }
 };
 
@@ -101,7 +127,10 @@ export const scrapeAsuraSearchManga = async ({ page = 1, keyw }) => {
 
         return response;
     } catch (err) {
-        throw err;
+        return {
+            error: true,
+            message: `Failed to scrape manga data: ${err.message} Page: ${page}, Keyw: ${keyw}`,
+          };
     }
 };
 
@@ -177,8 +206,10 @@ export const scrapeAsuraMangaDetails = async ({ id }) => {
             related_series,
         };
     } catch (err) {
-        console.log(err);
-        return { error: err };
+        return {
+            error: true,
+            message: `Failed to scrape manga data: ${err.message} id: ${id}`,
+          };
     }
 };
 
@@ -232,6 +263,9 @@ export const scrapeAsuraChapters = async ({ id, chapter_id }) => {
 
         return response;
     } catch (err) {
-        throw err;
+        return {
+            error: true,
+            message: `Failed to scrape manga data: ${err.message} id: ${id}, chapter id: ${chapter_id}`,
+          };
     }
 };
