@@ -47,7 +47,7 @@ export const scrapeLatestManga = async ({ list = [], page = 1 }) => {
             const totalPages = $(paginationLinks[paginationLinks.length - 1]).attr('href').match(/page=(\d+)/)[1];
             return parseInt(totalPages);
         };
-        
+
         const getCurrentPage = ($) => {
             const paginationLinks = $('.panel_page_number .group_page a');
             if (paginationLinks.length === 0) {
@@ -59,7 +59,7 @@ export const scrapeLatestManga = async ({ list = [], page = 1 }) => {
             }
             return parseInt(currentPage);
         };
-        
+
         const getTotalResults = ($) => {
             const totalResults = $('.panel_page_number .group_qty a').text().trim().match(/Total: (\d+)/)[1];
             if (!totalResults) {
@@ -264,7 +264,7 @@ export const scrapeSearch = async ({ keyw, page = 1 }) => {
                 title: $(el).find("div.story_item_right h3").text().trim(),
                 cover: $(el).find("a img").attr("src"),
                 id: $(el).find("a").attr("href").split('/').pop(),
-                views: $(el).find("div.story_item_right span").last().text().replace('View :', '').trim(), 
+                views: $(el).find("div.story_item_right span").last().text().replace('View :', '').trim(),
                 updated: $(el).find("div.story_item_right span").eq(1).text().replace('Updated :', '').trim(),
             });
         });
@@ -388,7 +388,7 @@ export const scrapeMangaDetails = async ({ id }) => {
             chapters.push({
                 title: $(el).find("a").text().trim(),
                 manga_id: $(el).find("a").attr("href").split("/")[4],
-                chapter_id: $(el).find("a").attr("href").match(/chapter-\d+/)?.[0] || '',
+                chapter_id: $(el).find("a").attr("href").match(/chapter-[\d.-]+/)?.[0] || '',
                 views: $(el).find("span:nth-child(2)").text().trim(),
                 upload_time: $(el).find("span:nth-child(3)").attr("title") || $(el).find("span:nth-child(3)").text().trim(),
             });
@@ -410,7 +410,7 @@ export const scrapeNatoMangaChapters = async ({ id, chapter_id }) => {
             const options = $('.navi-change-chapter:first option');
             return options.length;
         };
-        
+
         const getCurrentChapter = ($) => {
             const selectedOption = $('.navi-change-chapter:first option[selected]');
             return selectedOption.text().trim();
@@ -422,17 +422,17 @@ export const scrapeNatoMangaChapters = async ({ id, chapter_id }) => {
             const parts = dataC.split('/');
             return parts[2];
         };
-        
+
         const getHasNextChapter = ($) => {
             const nextLink = $('.btn-navigation-chap .back');
             return nextLink.length > 0;
         };
-        
+
         const getHasPrevChapter = ($) => {
             const prevLink = $('.btn-navigation-chap .next');
             return prevLink.length > 0;
         };
-        
+
         const getNextChapterLink = ($) => {
             const nextLink = $('.btn-navigation-chap .back');
             if (nextLink.length > 0) {
@@ -442,7 +442,7 @@ export const scrapeNatoMangaChapters = async ({ id, chapter_id }) => {
             }
             return null;
         };
-        
+
         const getPrevChapterLink = ($) => {
             const prevLink = $('.btn-navigation-chap .next');
             if (prevLink.length > 0) {
@@ -471,7 +471,7 @@ export const scrapeNatoMangaChapters = async ({ id, chapter_id }) => {
                 title: $(el).attr('title').replace(" - MangaNato", ""),
             });
         });
-        
+
         const response = {
             totalChapters: totalChapters.toString(),
             id: mangaId,
