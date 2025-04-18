@@ -9,6 +9,7 @@ import {
   scrapeNewManga,
   scrapeSearch,
   scrapeCompletedManga,
+  scrapeGenreManga,
   scrapeNatoMangaChapters
 } from './src/type/manga/natomanga_parser.js';
 
@@ -143,6 +144,16 @@ app.get('/manga/natomanga/completed-manga', asyncHandler(async (req, res) => {
     res.status(200).json(data);
   } catch (err) {
     console.error('Error in /top-completed-manga:', err);
+    throw err;
+  }
+}));
+
+app.get('/manga/natomanga/genre/:genre', asyncHandler(async (req, res) => {
+  try {
+    const data = await scrapeGenreManga({ page: req.query.page, genre: req.params.genre });
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error in /genre:', err);
     throw err;
   }
 }));

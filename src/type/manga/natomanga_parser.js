@@ -368,6 +368,86 @@ export const scrapeCompletedManga = async ({ list = [], page = 1 }) => {
     }
 };
 
+export const scrapeGenreManga = async ({ genre, page = 1 }) => {
+    try {
+        const html = await getCachedOrFetch(`${base_url}genre/${genre}?page=${page}`);
+        const $ = cheerio.load(html);
+
+        const getTotalPages = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const totalPages = $(paginationLinks[paginationLinks.length - 1]).attr('href').match(/page=(\d+)/)[1];
+            return parseInt(totalPages);
+        };
+
+        const getCurrentPage = ($) => {
+            const paginationLinks = $('.panel_page_number .group_page a');
+            if (paginationLinks.length === 0) {
+                throw new Error('Pagination links not found');
+            }
+            const currentPage = $('.panel_page_number .group_page a.page_select').text().trim();
+            if (!currentPage) {
+                const currentPageDiv = $('.panel_page_number .group_page div.page_select');
+                if (currentPageDiv.length > 0) {
+                    currentPage = currentPageDiv.text().trim();
+                } else {
+                    throw new Error('Current page not found');
+                }
+            }
+            return parseInt(currentPage);
+        };
+
+        const getTotalResults = ($) => {
+            const totalResults = $('.panel_page_number .group_qty a').text().trim().match(/Total: (\d+)/)[1];
+            if (!totalResults) {
+                const totalResultsDiv = $('.panel_page_number .group_qty div');
+                if (totalResultsDiv.length > 0) {
+                    const match = totalResultsDiv.text().trim().match(/Total: (\d+)/);
+                    if (match) {
+                        totalResults = match[1];
+                    } else {
+                        throw new Error('Total results not found');
+                    }
+                } else {
+                    throw new Error('Total results not found');
+                }
+            }
+            return parseInt(totalResults);
+        };
+
+        const mangaList = [];
+        $('.truyen-list .list-truyen-item-wrap').each((_, el) => {
+            mangaList.push({
+                title: $(el).find("h3 a").text().trim(),
+                cover: $(el).find(".cover img").attr("src"),
+                id: $(el).find("h3 a").attr("href").split('/').pop(),
+                latest_chapter: $(el).find(".list-story-item-wrap-chapter").text().trim(),
+                latest_chapter_id: $(el).find(".list-story-item-wrap-chapter").attr("href").match(/chapter-\d+/)?.[0] || '',
+                views: $(el).find(".aye_icon").text().trim(),
+                description: $(el).find("p").text().trim(),
+            });
+        });
+
+        const totalPages = getTotalPages($);
+        const currentPage = getCurrentPage($);
+        const totalResults = getTotalResults($);
+
+        const response = {
+            currentPage: currentPage.toString(),
+            totalResults: totalResults.toString(),
+            hasNextPage: currentPage < totalPages,
+            hasPrevPage: currentPage > 1,
+            results: mangaList
+        };
+
+        return response;
+    } catch (err) {
+        throw err;
+    }
+};
+
 export const scrapeMangaDetails = async ({ id }) => {
     try {
         const html = await getCachedOrFetch(`${mangaInfoBaseURL}${id}`);
