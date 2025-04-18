@@ -2,16 +2,20 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import randomUseragent from 'random-useragent';
 
-const base_url = "https://asuracomic.net/";
+const base_url = process.env.ASURASCANS_BASE_URL;
+
+if (!base_url) {
+    throw new Error('ASURASCANS_BASE_URL environment variable is not set');
+  }
 const sort_manga_url = `${base_url}series?page=`;
 const sort_advance_url = "&genres=&status=-1&types=-1&order=";
 const search_url = `${base_url}series?page=`;
-const mangaInfoBaseURL = "https://asuracomic.net/series/"
+const mangaInfoBaseURL = `${base_url}series/`
 
 const userAgent = randomUseragent.getRandom();
 
 const referers = [
-    // Chrome User Agents
+    // REFERERS
     "https://asuracomic.net/series/the-heavenly-demon-wants-a-quiet-life-f786833a",
     "https://asuracomic.net/series/artifact-devouring-player-a252d7ac",
     "https://asuracomic.net/series/the-fox-eyed-villain-of-the-demon-academy-4f9be980",

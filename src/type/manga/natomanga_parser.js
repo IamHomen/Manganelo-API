@@ -1,11 +1,19 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const base_url = "https://www.natomanga.com/";
+const base_url = process.env.NATOMANGA_BASE_URL;
+if (!base_url) {
+  throw new Error('NATOMANGA_BASE_URL environment variable is not set');
+}
+
+console.log(base_url);
+
 const mangaInfoBaseURL = `${base_url}manga/`;
 const recent_release_url = `${base_url}manga-list/latest-manga?page=`;
 const hot_url = `${base_url}manga-list/hot-manga?page=`;
-const new_manga_url = `https://www.natomanga.com/manga-list/new-manga?page=`;
+const new_manga_url = `${base_url}manga-list/new-manga?page=`;
 const search_url = `${base_url}search/story/`;
 const completed_manga = `${base_url}manga-list/completed-manga?page=`;
 
