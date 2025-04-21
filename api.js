@@ -276,12 +276,21 @@ app.get("/proxy-image", async (req, res) => {
     return res.send(cached.data);
   }
 
+  // Determine appropriate Referer
+  let referer = "";
+  if (decodedUrl.includes("asuracomic")) {
+    referer = "https://asuracomic.net/";
+  } else if (decodedUrl.includes("2xstorage")) {
+    referer = "https://www.natomanga.com/";
+  }
+
   try {
     const response = await axios.get(decodedUrl, {
       responseType: "arraybuffer",
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
-        "Referer": "https://www.natomanga.com/",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
+        "Referer": referer,
         "Accept-Language": "en-US,en;q=0.9",
       },
     });
