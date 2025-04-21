@@ -225,6 +225,8 @@ export const scrapeAsuraChapters = async ({ id, chapter_id }) => {
 
         const chapterLinks = $('.dropdown-content a');
 
+        const title = $('h2.text-xl').text();
+
         const currentChapterText = $('.dropdown-btn h2').text();
         const currentChapterNumber = parseInt(currentChapterText.replace('Chapter ', ''));
 
@@ -257,6 +259,7 @@ export const scrapeAsuraChapters = async ({ id, chapter_id }) => {
 
         const response = {
             id,
+            title,
             currentChapterNumber,
             hasNextPage,
             hasPrevPage,
