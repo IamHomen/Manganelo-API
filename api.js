@@ -276,13 +276,17 @@ app.get("/proxy-image", async (req, res) => {
     return res.send(cached.data);
   }
 
-  // Determine appropriate Referer
-  let referer = "";
-  if (decodedUrl.includes("asuracomic")) {
-    referer = "https://asuracomic.net/";
-  } else if (decodedUrl.includes("2xstorage")) {
-    referer = "https://www.natomanga.com/";
-  }
+// Determine appropriate Referer
+let referer = "";
+
+if (decodedUrl.includes("asuracomic")) {
+  referer = "https://asuracomic.net/";
+} else if (
+  decodedUrl.includes("2xstorage") || 
+  decodedUrl.includes("waitst")
+) {
+  referer = "https://www.natomanga.com/";
+}
 
   try {
     const response = await axios.get(decodedUrl, {
