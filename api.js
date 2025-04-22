@@ -286,6 +286,8 @@ if (decodedUrl.includes("asuracomic")) {
   decodedUrl.includes("waitst")
 ) {
   referer = "https://www.natomanga.com/";
+} else if (decodedUrl.includes("animepahe")) {
+  referer = "https://animepahe.ru/";
 }
 
   try {
